@@ -3,212 +3,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Text Randomizer (Pro)</title>
+    <title>Text Randomizer Ultra Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #4f46e5;
-            --bg-color: #f1f5f9;
-            --card-bg: #ffffff;
-            --text-color: #0f172a;
-            --border-color: #cbd5e1;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --secondary: #10b981;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            transition: all 0.2s ease;
         }
 
         body {
-            font-family: 'Sarabun', -apple-system, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
+            font-family: 'Sarabun', 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
             margin: 0;
-            padding: 20px;
+            padding: 40px 20px;
+            line-height: 1.6;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 850px;
             margin: 0 auto;
         }
 
         header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         h1 {
-            color: var(--primary-color);
-            margin-bottom: 10px;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
         }
 
-        .badge {
-            background: #e0e7ff;
-            color: #4338ca;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: bold;
+        .subtitle {
+            color: var(--text-muted);
+            margin-top: 10px;
+            font-size: 1.1rem;
         }
 
-        .card {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 16px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            margin-bottom: 25px;
+        .main-card {
+            background: var(--card);
+            border-radius: 24px;
+            padding: 32px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
         }
 
-        textarea {
-            width: 100%;
-            height: 180px;
-            padding: 15px;
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            font-size: 16px;
-            resize: vertical;
-            box-sizing: border-box;
-            margin-bottom: 20px;
-            transition: border-color 0.2s;
-        }
-
-        textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-            background: #f8fafc;
-            padding: 15px;
-            border-radius: 12px;
-        }
-
-        .option-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            font-size: 15px;
-            user-select: none;
-        }
-
-        .option-item input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-
-        .control-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        select {
-            padding: 8px 12px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            background: white;
-            cursor: pointer;
-        }
-
-        #convertBtn {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(79, 70, 229, 0.3);
-            transition: transform 0.1s, box-shadow 0.2s;
-        }
-
-        #convertBtn:active {
-            transform: scale(0.98);
-        }
-
-        #convertBtn:hover {
-            box-shadow: 0 6px 12px rgba(79, 70, 229, 0.4);
-        }
-
-        .results-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-
-        .result-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-            animation: fadeIn 0.3s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .result-header {
-            background: #f8fafc;
-            padding: 12px 20px;
+        .input-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 12px;
         }
 
-        .result-title {
-            font-weight: bold;
-            color: var(--primary-color);
+        .input-label {
+            font-weight: 700;
+            color: var(--text-main);
+            font-size: 0.95rem;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .result-body {
-            padding: 20px;
-            position: relative;
-        }
-
-        .result-text {
-            white-space: pre-wrap;
-            word-break: break-word;
-            font-size: 16px;
-            color: #334155;
-            background: #ffffff;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px dashed #cbd5e1;
-        }
-
-        .copy-btn {
+        .btn-paste {
+            background: #f1f5f9;
+            color: var(--primary);
+            border: none;
             padding: 8px 16px;
-            background: #10b981;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-paste:hover {
+            background: #e2e8f0;
+            transform: translateY(-1px);
+        }
+
+        textarea {
+            width: 100%;
+            height: 180px;
+            padding: 20px;
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            font-size: 16px;
+            font-family: inherit;
+            resize: none;
+            background: #fcfcfd;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .options-panel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 24px 0;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .checkbox-wrapper input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .select-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        select {
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: white;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        #convertBtn {
+            width: 100%;
+            padding: 18px;
+            background: var(--primary);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-weight: 700;
             cursor: pointer;
-            font-weight: 600;
-            transition: background 0.2s;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
 
-        .copy-btn:hover {
+        #convertBtn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        #convertBtn:active {
+            transform: translateY(0);
+        }
+
+        .results-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .result-item {
+            background: var(--card);
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .result-item:hover {
+            box-shadow: var(--shadow);
+            transform: translateX(5px);
+        }
+
+        .result-head {
+            padding: 16px 24px;
+            background: #fcfcfd;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .mode-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 8px;
+            background: #e0e7ff;
+            color: var(--primary);
+        }
+
+        .result-content {
+            padding: 24px;
+        }
+
+        .result-box {
+            background: #f1f5f9;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 15px;
+            white-space: pre-wrap;
+            word-break: break-word;
+            color: #334155;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-copy {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .btn-copy:hover {
             background: #059669;
+            transform: scale(1.05);
         }
 
-        .copy-btn.copied {
+        .btn-copy.copied {
             background: #64748b;
         }
 
-        .footer-info {
-            text-align: center;
-            margin-top: 40px;
-            color: #64748b;
-            font-size: 0.9rem;
+        /* Toast Notification */
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 20px 10px; }
+            .main-card { padding: 20px; }
+            h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
@@ -216,80 +290,110 @@
 
 <div class="container">
     <header>
-        <h1>Text Randomizer <span class="badge">PRO</span></h1>
-        <p>สร้างข้อความที่มีความหลากหลายสูง พร้อมอักขระล่องหน</p>
+        <h1>Text Randomizer</h1>
+        <p class="subtitle">เครื่องมือแปลงข้อความอัจฉริยะ ความหลากหลายระดับสูงสุด</p>
     </header>
-    
-    <div class="card">
-        <textarea id="inputText" placeholder="วางข้อความที่นี่... (เช่น ชื่อ / สถานที่ / ที่อยู่ / เบอร์โทร)"></textarea>
+
+    <div class="main-card">
+        <div class="input-header">
+            <div class="input-label">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                ข้อความต้นฉบับ
+            </div>
+            <button class="btn-paste" id="pasteBtn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                วางข้อความ
+            </button>
+        </div>
         
-        <div class="options-grid">
-            <label class="option-item">
-                <input type="checkbox" id="optRandomSpace" checked> สุ่มเว้นวรรค (Visible)
+        <textarea id="inputText" placeholder="วาง ชื่อ / ที่อยู่ / เบอร์โทร ที่นี่..."></textarea>
+
+        <div class="options-panel">
+            <label class="checkbox-wrapper">
+                <input type="checkbox" id="optRandomSpace" checked> สุ่มเว้นวรรค
             </label>
-            <label class="option-item">
-                <input type="checkbox" id="optInsertChars" checked> แทรกอักขระพิเศษ (. , ~)
+            <label class="checkbox-wrapper">
+                <input type="checkbox" id="optInsertChars" checked> แทรกอักขระพิเศษ
             </label>
-            <label class="option-item">
-                <input type="checkbox" id="optShuffleLines" checked> สลับตำแหน่งบรรทัด
+            <label class="checkbox-wrapper">
+                <input type="checkbox" id="optShuffleLines" checked> สลับบรรทัด
             </label>
-            <label class="option-item">
-                <input type="checkbox" id="optInvisible" checked> <b>อักขระล่องหน (Zero-Width)</b>
+            <label class="checkbox-wrapper">
+                <input type="checkbox" id="optInvisible" checked> อักขระล่องหน
             </label>
-            <div class="control-group">
+            <div class="select-wrapper">
                 <span>รูปแบบ:</span>
                 <select id="optLayout">
                     <option value="multi">หลายบรรทัด</option>
-                    <option value="single">บรรทัดเดียว (ใช้ / คั่น)</option>
+                    <option value="single">บรรทัดเดียว</option>
                 </select>
             </div>
         </div>
 
-        <button id="convertBtn">แปลงข้อความ (สุ่มใหม่ทั้งหมด)</button>
+        <button id="convertBtn">แปลงข้อความทันที</button>
     </div>
 
-    <div id="results" class="results-container"></div>
-
-    <div class="footer-info">
-        ระบบจะรักษาความถูกต้องของข้อมูล 100% โดยเน้นความหลากหลายของ Digital Signature
-    </div>
+    <div id="results" class="results-grid"></div>
 </div>
 
+<div id="toast">คัดลอกแล้ว!</div>
+
 <script>
-    // อักขระพิเศษที่อ่านง่าย
     const visibleChars = ['.', ',', '~', '-', 'ํ', '๐'];
-    // อักขระล่องหน (Zero Width Space, Zero Width Non-Joiner, Zero Width Joiner)
     const invisibleChars = ['\u200B', '\u200C', '\u200D'];
-    
+
+    // ฟังก์ชันแสดง Toast
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        toast.innerText = msg;
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 2000);
+    }
+
+    // ปุ่มวางข้อความ
+    document.getElementById('pasteBtn').addEventListener('click', async () => {
+        try {
+            const text = await navigator.clipboard.readText();
+            document.getElementById('inputText').value = text;
+            showToast('วางข้อความสำเร็จ!');
+        } catch (err) {
+            showToast('ไม่สามารถเข้าถึงคลิปบอร์ดได้');
+        }
+    });
+
+    // ปุ่มแปลงข้อความ
     document.getElementById('convertBtn').addEventListener('click', () => {
         const input = document.getElementById('inputText').value.trim();
-        if (!input) return alert('กรุณาใส่ข้อความ');
+        if (!input) {
+            showToast('กรุณาใส่ข้อความก่อนครับ');
+            return;
+        }
 
         const resultsDiv = document.getElementById('results');
         resultsDiv.innerHTML = '';
 
-        // สร้างผลลัพธ์ 5 รูปแบบที่มี "น้ำหนัก" ต่างกัน
         const modes = [
-            { name: 'สมดุล', space: 0.1, char: 0.05, invis: 0.2 },
-            { name: 'เน้นอักขระพิเศษ', space: 0.05, char: 0.15, invis: 0.1 },
-            { name: 'เน้นอักขระล่องหน', space: 0.05, char: 0.02, invis: 0.5 },
-            { name: 'เน้นเว้นวรรค', space: 0.2, char: 0.02, invis: 0.1 },
-            { name: 'กระจายตัวสูง', space: 0.15, char: 0.1, invis: 0.3 }
+            { name: 'Balanced', space: 0.1, char: 0.05, invis: 0.2 },
+            { name: 'Special Char', space: 0.05, char: 0.15, invis: 0.1 },
+            { name: 'Invisible', space: 0.05, char: 0.02, invis: 0.5 },
+            { name: 'Spaced Out', space: 0.2, char: 0.02, invis: 0.1 },
+            { name: 'Max Variation', space: 0.15, char: 0.1, invis: 0.3 }
         ];
 
         modes.forEach((mode, index) => {
             const processedText = processText(input, mode);
-            createResultElement(index + 1, mode.name, processedText);
+            createResultCard(index + 1, mode.name, processedText);
         });
+        
+        window.scrollTo({ top: document.getElementById('results').offsetTop - 20, behavior: 'smooth' });
     });
 
     function processText(text, mode) {
         let lines = text.split('\n').map(l => l.trim()).filter(l => l !== '');
         
-        // 1. Smart Detection: ค้นหาเบอร์โทรศัพท์
+        // 1. ตรวจจับเบอร์โทร
         let phoneLine = '';
         const phoneRegex = /(\d{2,3}[-.\s]?\d{3,4}[-.\s]?\d{4})/;
-        
         for (let i = 0; i < lines.length; i++) {
             if (phoneRegex.test(lines[i])) {
                 phoneLine = lines.splice(i, 1)[0];
@@ -297,123 +401,84 @@
             }
         }
 
-        // 2. สลับตำแหน่งบรรทัด (ยกเว้นบรรทัดแรกและสุดท้าย)
-        const shuffleLines = document.getElementById('optShuffleLines').checked;
-        if (shuffleLines && lines.length > 2) {
+        // 2. สลับบรรทัด
+        if (document.getElementById('optShuffleLines').checked && lines.length > 2) {
             const first = lines.shift();
             const last = lines.pop();
-            
-            // Fisher-Yates Shuffle
             for (let i = lines.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [lines[i], lines[j]] = [lines[j], lines[i]];
             }
-            
             lines.unshift(first);
             lines.push(last);
         }
 
-        // 3. แทรกเบอร์โทรกลับ (บังคับให้อยู่บรรทัดที่ 2 หรือ 3 และห้ามอยู่บรรทัดสุดท้าย)
+        // 3. แทรกเบอร์โทรกลับ (บรรทัด 2-3)
         if (phoneLine) {
-            let targetPos = Math.floor(Math.random() * 2) + 1; 
-            if (targetPos >= lines.length) targetPos = Math.max(1, lines.length - 1);
-            lines.splice(targetPos, 0, phoneLine);
+            let pos = Math.floor(Math.random() * 2) + 1;
+            if (pos >= lines.length) pos = Math.max(1, lines.length - 1);
+            lines.splice(pos, 0, phoneLine);
         }
 
-        // 4. ประมวลผลแต่ละบรรทัดตามน้ำหนักของ Mode
         const useSpace = document.getElementById('optRandomSpace').checked;
         const useChars = document.getElementById('optInsertChars').checked;
         const useInvis = document.getElementById('optInvisible').checked;
 
-        let processedLines = lines.map((line, lineIdx) => {
-            // ถ้าเป็นบรรทัดเบอร์โทร ให้สุ่มน้อยลงเพื่อความแม่นยำ
+        let processed = lines.map(line => {
             const isPhone = phoneRegex.test(line);
-            const currentSpaceProb = isPhone ? 0.02 : mode.space;
-            const currentCharProb = isPhone ? 0.01 : mode.char;
-            const currentInvisProb = mode.invis;
-
             let chars = line.split('');
-            let newLine = '';
+            let res = '';
             
             for (let i = 0; i < chars.length; i++) {
-                newLine += chars[i];
-                
-                // ไม่แทรกอักขระถ้าเป็นช่องว่างอยู่แล้ว
+                res += chars[i];
                 if (chars[i] === ' ') continue;
 
-                // สุ่มแทรกอักขระล่องหน (หัวใจสำคัญของความหลากหลายทางข้อมูล)
-                if (useInvis && Math.random() < currentInvisProb) {
-                    newLine += invisibleChars[Math.floor(Math.random() * invisibleChars.length)];
-                }
-
-                // สุ่มแทรกอักขระพิเศษ
-                if (useChars && Math.random() < currentCharProb && i < chars.length - 1) {
-                    newLine += visibleChars[Math.floor(Math.random() * visibleChars.length)];
-                }
-                
-                // สุ่มเว้นวรรค
-                if (useSpace && Math.random() < currentSpaceProb && i < chars.length - 1) {
-                    newLine += ' ';
+                if (useInvis && Math.random() < mode.invis) res += invisibleChars[Math.floor(Math.random() * invisibleChars.length)];
+                if (!isPhone) {
+                    if (useChars && Math.random() < mode.char && i < chars.length - 1) res += visibleChars[Math.floor(Math.random() * visibleChars.length)];
+                    if (useSpace && Math.random() < mode.space && i < chars.length - 1) res += ' ';
                 }
             }
-            return newLine.trim();
+            return res.trim();
         });
 
-        // 5. Layout Output
-        const layout = document.getElementById('optLayout').value;
-        if (layout === 'single') {
-            return processedLines.join(' / ');
-        } else {
-            return processedLines.join('\n');
-        }
+        return document.getElementById('optLayout').value === 'single' ? processed.join(' / ') : processed.join('\n');
     }
 
-    function createResultElement(index, modeName, text) {
-        const card = document.createElement('div');
-        card.className = 'result-card';
-        
-        const header = document.createElement('div');
-        header.className = 'result-header';
-        header.innerHTML = `
-            <div class="result-title">
-                <span>#${index}</span>
-                <span style="font-size: 0.8rem; color: #64748b; font-weight: normal;">(โหมด: ${modeName})</span>
+    function createResultCard(id, mode, text) {
+        const item = document.createElement('div');
+        item.className = 'result-item';
+        item.innerHTML = `
+            <div class="result-head">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <span style="font-weight:800; color:#1e293b;">#${id}</span>
+                    <span class="mode-tag">${mode}</span>
+                </div>
+                <button class="btn-copy" onclick="copyResult(this, \`${text.replace(/`/g, '\\`')}\`)">คัดลอก</button>
+            </div>
+            <div class="result-content">
+                <div class="result-box">${text}</div>
             </div>
         `;
+        document.getElementById('results').appendChild(item);
+    }
+
+    function copyResult(btn, text) {
+        const el = document.createElement('textarea');
+        el.value = text;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
         
-        const copyBtn = document.createElement('button');
-        copyBtn.className = 'copy-btn';
-        copyBtn.innerText = 'คัดลอก';
-        copyBtn.onclick = () => {
-            // ใช้เทคนิคการคัดลอกที่รองรับอักขระพิเศษ
-            const el = document.createElement('textarea');
-            el.value = text;
-            document.body.appendChild(el);
-            el.select();
-            document.execCommand('copy');
-            document.body.removeChild(el);
-            
-            copyBtn.innerText = 'คัดลอกแล้ว!';
-            copyBtn.classList.add('copied');
-            setTimeout(() => {
-                copyBtn.innerText = 'คัดลอก';
-                copyBtn.classList.remove('copied');
-            }, 2000);
-        };
-        
-        header.appendChild(copyBtn);
-        
-        const body = document.createElement('div');
-        body.className = 'result-body';
-        
-        const textDiv = document.createElement('div');
-        textDiv.className = 'result-text';
-        textDiv.innerText = text;
-        
-        body.appendChild(textDiv);
-        card.appendChild(header);
-        card.appendChild(body);
-        document.getElementById('results').appendChild(card);
+        const originalText = btn.innerText;
+        btn.innerText = 'สำเร็จ!';
+        btn.classList.add('copied');
+        showToast('คัดลอกลงคลิปบอร์ดแล้ว');
+        setTimeout(() => {
+            btn.innerText = originalText;
+            btn.classList.remove('copied');
+        }, 2000);
     }
 </script>
 
