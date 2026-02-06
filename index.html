@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Randomizer & Formatter</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 16px;
+            resize: vertical;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        select {
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        button#convertBtn {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        button#convertBtn:hover {
+            background-color: #1d4ed8;
+        }
+
+        .results-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .result-item {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .result-text {
+            white-space: pre-wrap;
+            word-break: break-word;
+            background: #f1f5f9;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .copy-btn {
+            padding: 6px 12px;
+            background: #10b981;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .copy-btn:hover {
+            background: #059669;
+        }
+
+        .copy-btn.copied {
+            background: #6b7280;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Text Randomizer</h1>
+    
+    <div class="card">
+        <textarea id="inputText" placeholder="วางข้อความที่นี่... (เช่น ชื่อ / สถานที่ / ที่อยู่ / เบอร์โทร)"></textarea>
+        
+        <div class="options">
+            <label class="option-item">
+                <input type="checkbox" id="optRandomSpace" checked> สุ่มเว้นวรรค
+            </label>
+            <label class="option-item">
+                <input type="checkbox" id="optInsertChars" checked> แทรกอักขระพิเศษ
+            </label>
+            <label class="option-item">
+                <input type="checkbox" id="optShuffleLines" checked> สลับตำแหน่งบรรทัด
+            </label>
+            <div class="option-item">
+                รูปแบบ: 
+                <select id="optLayout">
+                    <option value="multi">หลายบรรทัด</option>
+                    <option value="single">บรรทัดเดียว</option>
+                </select>
+            </div>
+        </div>
+
+        <button id="convertBtn">แปลงข้อความ</button>
+    </div>
+
+    <div id="results" class="results-container">
+        <!-- Results will appear here -->
+    </div>
+</div>
+
+<script>
+    const specialChars = ['.', ',', '~', '-', 'ํ', '๐'];
+    
+    document.getElementById('convertBtn').addEventListener('click', () => {
+        const input = document.getElementById('inputText').value.trim();
+        if (!input) return alert('กรุณาใส่ข้อความ');
+
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = '';
+
+        // สร้างผลลัพธ์ 5 รูปแบบ
+        for (let i = 1; i <= 5; i++) {
+            const processedText = processText(input);
+            createResultElement(i, processedText);
+        }
+    });
+
+    function processText(text) {
+        let lines = text.split('\n').map(l => l.trim()).filter(l => l !== '');
+        
+        // 1. แยกเบอร์โทรศัพท์ออกมา (ค้นหาตัวเลข 9-10 หลัก)
+        let phoneIndex = -1;
+        const phoneRegex = /(\d{2,3}[-.\s]?\d{3,4}[-.\s]?\d{4})/;
+        
+        for (let i = 0; i < lines.length; i++) {
+            if (phoneRegex.test(lines[i])) {
+                phoneIndex = i;
+                break;
+            }
+        }
+
+        let phoneLine = '';
+        if (phoneIndex !== -1) {
+            phoneLine = lines.splice(phoneIndex, 1)[0];
+        }
+
+        // 2. สลับตำแหน่งบรรทัด (ยกเว้นบรรทัดแรกและสุดท้ายของข้อมูลที่เหลือ)
+        const shuffleLines = document.getElementById('optShuffleLines').checked;
+        if (shuffleLines && lines.length > 2) {
+            const first = lines.shift();
+            const last = lines.pop();
+            
+            // Shuffle middle
+            for (let i = lines.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [lines[i], lines[j]] = [lines[j], lines[i]];
+            }
+            
+            lines.unshift(first);
+            lines.push(last);
+        }
+
+        // 3. แทรกเบอร์โทรกลับเข้าไป (บังคับให้อยู่บรรทัดที่ 2 หรือ 3 และไม่ใช่บรรทัดสุดท้าย)
+        if (phoneLine) {
+            let targetPos = Math.floor(Math.random() * 2) + 1; // สุ่มตำแหน่ง 1 หรือ 2 (index)
+            if (targetPos >= lines.length) targetPos = Math.max(1, lines.length - 1);
+            lines.splice(targetPos, 0, phoneLine);
+        }
+
+        // 4. ประมวลผลแต่ละบรรทัด (สุ่มเว้นวรรคและอักขระ)
+        const randomSpace = document.getElementById('optRandomSpace').checked;
+        const insertChars = document.getElementById('optInsertChars').checked;
+
+        let processedLines = lines.map(line => {
+            let words = line.split('');
+            let newLine = '';
+            
+            for (let i = 0; i < words.length; i++) {
+                newLine += words[i];
+                
+                // สุ่มแทรกอักขระพิเศษ (โอกาส 5%)
+                if (insertChars && Math.random() < 0.05 && i < words.length - 1 && words[i] !== ' ') {
+                    newLine += specialChars[Math.floor(Math.random() * specialChars.length)];
+                }
+                
+                // สุ่มเว้นวรรค (โอกาส 10%)
+                if (randomSpace && Math.random() < 0.1 && i < words.length - 1 && words[i] !== ' ') {
+                    newLine += ' ';
+                }
+            }
+            return newLine.replace(/\s+/g, ' ').trim();
+        });
+
+        // 5. เลือกรูปแบบ Layout
+        const layout = document.getElementById('optLayout').value;
+        if (layout === 'single') {
+            return processedLines.join(' / ');
+        } else {
+            return processedLines.join('\n');
+        }
+    }
+
+    function createResultElement(index, text) {
+        const container = document.createElement('div');
+        container.className = 'result-item';
+        
+        const header = document.createElement('div');
+        header.className = 'result-header';
+        header.innerHTML = `<span>รูปแบบที่ ${index}</span>`;
+        
+        const copyBtn = document.createElement('button');
+        copyBtn.className = 'copy-btn';
+        copyBtn.innerText = 'คัดลอก';
+        copyBtn.onclick = () => {
+            navigator.clipboard.writeText(text).then(() => {
+                copyBtn.innerText = 'คัดลอกแล้ว!';
+                copyBtn.classList.add('copied');
+                setTimeout(() => {
+                    copyBtn.innerText = 'คัดลอก';
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            });
+        };
+        
+        header.appendChild(copyBtn);
+        
+        const textDiv = document.createElement('div');
+        textDiv.className = 'result-text';
+        textDiv.innerText = text;
+        
+        container.appendChild(header);
+        container.appendChild(textDiv);
+        document.getElementById('results').appendChild(container);
+    }
+</script>
+
+</body>
+</html>
