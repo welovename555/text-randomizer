@@ -3,371 +3,386 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Randomizer Ultra Pro (Single Line)</title>
+    <title>TERMINAL: TEXT RANDOMIZER HACKER EDITION</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Sarabun:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-hover: #4f46e5;
-            --secondary: #10b981;
-            --bg: #f8fafc;
-            --card: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            --neon-green: #00ff41;
+            --dark-green: #003b00;
+            --bg-black: #0a0a0a;
+            --terminal-bg: rgba(10, 10, 10, 0.95);
+            --glitch-red: #ff003c;
+            --glitch-blue: #00d8ff;
         }
 
         * {
             box-sizing: border-box;
-            transition: all 0.2s ease;
+            cursor: crosshair;
         }
 
         body {
-            font-family: 'Sarabun', 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
+            background-color: var(--bg-black);
+            color: var(--neon-green);
+            font-family: 'Fira Code', 'Sarabun', monospace;
             margin: 0;
-            padding: 40px 20px;
-            line-height: 1.6;
+            padding: 0;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Matrix Background Effect */
+        #matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
         }
 
         .container {
-            max-width: 850px;
-            margin: 0 auto;
+            width: 90%;
+            max-width: 1000px;
+            z-index: 1;
+            padding: 20px;
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 40px;
+        .terminal-window {
+            background: var(--terminal-bg);
+            border: 2px solid var(--neon-green);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+            position: relative;
+            overflow: hidden;
         }
 
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin: 0;
-            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -1px;
-        }
-
-        .subtitle {
-            color: var(--text-muted);
-            margin-top: 10px;
-            font-size: 1.1rem;
-        }
-
-        .main-card {
-            background: var(--card);
-            border-radius: 24px;
-            padding: 32px;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow);
-            margin-bottom: 30px;
-        }
-
-        .input-header {
+        .terminal-header {
+            background: var(--neon-green);
+            color: var(--bg-black);
+            padding: 8px 15px;
+            font-weight: bold;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            font-size: 0.9rem;
         }
 
-        .input-label {
-            font-weight: 700;
-            color: var(--text-main);
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .terminal-body {
+            padding: 30px;
         }
 
-        .btn-paste {
-            background: #f1f5f9;
-            color: var(--primary);
-            border: none;
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+        .glitch-text {
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
         }
 
-        .btn-paste:hover {
-            background: #e2e8f0;
-            transform: translateY(-1px);
+        .glitch-text::before, .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-black);
+        }
+
+        .glitch-text::before {
+            left: 2px;
+            text-shadow: -2px 0 var(--glitch-red);
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+
+        .glitch-text::after {
+            left: -2px;
+            text-shadow: -2px 0 var(--glitch-blue);
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(31px, 9999px, 94px, 0); }
+            20% { clip: rect(62px, 9999px, 42px, 0); }
+            /* ... more frames ... */
+            100% { clip: rect(89px, 9999px, 98px, 0); }
         }
 
         textarea {
             width: 100%;
-            height: 180px;
-            padding: 20px;
-            border: 2px solid var(--border);
-            border-radius: 16px;
-            font-size: 16px;
+            height: 200px;
+            background: rgba(0, 59, 0, 0.2);
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            padding: 15px;
             font-family: inherit;
+            font-size: 1rem;
             resize: none;
-            background: #fcfcfd;
-        }
-
-        textarea:focus {
+            margin-bottom: 20px;
             outline: none;
-            border-color: var(--primary);
-            background: #fff;
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
         }
 
-        .options-panel {
+        textarea::placeholder {
+            color: rgba(0, 255, 65, 0.3);
+        }
+
+        .controls {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-            margin: 24px 0;
-            padding: 20px;
-            background: #f8fafc;
-            border-radius: 16px;
-            border: 1px solid var(--border);
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
         }
 
-        .checkbox-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        .checkbox-wrapper input {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--primary);
-            cursor: pointer;
-        }
-
-        .badge-single {
-            background: #fee2e2;
-            color: #ef4444;
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-size: 0.75rem;
+        .btn-hacker {
+            background: transparent;
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            padding: 12px 20px;
+            font-family: inherit;
             font-weight: bold;
-            margin-left: auto;
-        }
-
-        #convertBtn {
-            width: 100%;
-            padding: 18px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 16px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-        }
-
-        #convertBtn:hover {
-            background: var(--primary-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
-        }
-
-        .results-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .result-item {
-            background: var(--card);
-            border-radius: 20px;
-            border: 1px solid var(--border);
+            text-transform: uppercase;
+            transition: all 0.3s;
+            position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
-        .result-head {
-            padding: 16px 24px;
-            background: #fcfcfd;
-            border-bottom: 1px solid var(--border);
+        .btn-hacker:hover {
+            background: var(--neon-green);
+            color: var(--bg-black);
+            box-shadow: 0 0 15px var(--neon-green);
+        }
+
+        #executeBtn {
+            width: 100%;
+            font-size: 1.2rem;
+            letter-spacing: 5px;
+            border-width: 2px;
+        }
+
+        /* Popup Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+        }
+
+        .popup {
+            width: 90%;
+            max-width: 800px;
+            background: var(--bg-black);
+            border: 2px solid var(--neon-green);
+            padding: 30px;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .popup-header {
+            border-bottom: 1px solid var(--neon-green);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .mode-tag {
+        .result-card {
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(0, 59, 0, 0.1);
+        }
+
+        .result-card:hover {
+            border-color: var(--neon-green);
+            background: rgba(0, 59, 0, 0.2);
+        }
+
+        .tech-info {
             font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            padding: 4px 10px;
-            border-radius: 8px;
-            background: #e0e7ff;
-            color: var(--primary);
+            color: #888;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
 
-        .result-content {
-            padding: 24px;
+        .result-text {
+            background: #000;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            word-break: break-all;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--neon-green);
         }
 
-        .result-box {
-            background: #f1f5f9;
-            padding: 16px;
-            border-radius: 12px;
-            font-size: 15px;
-            white-space: normal; /* บังคับบรรทัดเดียว */
-            word-break: break-word;
-            color: #334155;
-            border: 1px solid #e2e8f0;
-            line-height: 1.4;
-        }
-
-        .btn-copy {
-            background: var(--secondary);
-            color: white;
+        .btn-copy-small {
+            background: var(--neon-green);
+            color: var(--bg-black);
             border: none;
-            padding: 8px 20px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 0.9rem;
+            padding: 5px 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
             cursor: pointer;
         }
 
-        .btn-copy:hover {
-            background: #059669;
-            transform: scale(1.05);
+        .close-popup {
+            color: var(--glitch-red);
+            cursor: pointer;
+            font-weight: bold;
         }
 
-        #toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #1e293b;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-weight: 600;
-            display: none;
-            z-index: 1000;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--bg-black); }
+        ::-webkit-scrollbar-thumb { background: var(--neon-green); }
     </style>
 </head>
 <body>
 
+<canvas id="matrix-bg"></canvas>
+
 <div class="container">
-    <header>
-        <h1>Text Randomizer</h1>
-        <p class="subtitle">โหมดบรรทัดเดียว (Single Line) เน้นความเนียนเป็นธรรมชาติ</p>
-    </header>
-
-    <div class="main-card">
-        <div class="input-header">
-            <div class="input-label">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                ข้อความต้นฉบับ
+    <div class="terminal-window">
+        <div class="terminal-header">
+            <span>SYSTEM_ACCESS: TEXT_RANDOMIZER_V4.0</span>
+            <span>[ STATUS: ONLINE ]</span>
+        </div>
+        <div class="terminal-body">
+            <div class="glitch-text" data-text="HACKER EDITION">HACKER EDITION</div>
+            
+            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <button class="btn-hacker" id="pasteBtn" style="flex: 1;">> PASTE_DATA</button>
+                <button class="btn-hacker" id="clearBtn" style="flex: 1;">> CLEAR_BUFFER</button>
             </div>
-            <button class="btn-paste" id="pasteBtn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-                วางข้อความ
-            </button>
-        </div>
-        
-        <textarea id="inputText" placeholder="วาง ชื่อ / ที่อยู่ / เบอร์โทร ที่นี่..."></textarea>
 
-        <div class="options-panel">
-            <label class="checkbox-wrapper">
-                <input type="checkbox" id="optRandomSpace" checked> สุ่มเว้นวรรค
-            </label>
-            <label class="checkbox-wrapper">
-                <input type="checkbox" id="optInsertChars" checked> แทรกอักขระพิเศษ
-            </label>
-            <label class="checkbox-wrapper">
-                <input type="checkbox" id="optShuffleLines" checked> สลับลำดับข้อมูล
-            </label>
-            <label class="checkbox-wrapper">
-                <input type="checkbox" id="optInvisible" checked> อักขระล่องหน
-            </label>
-            <span class="badge-single">FIXED: บรรทัดเดียว</span>
-        </div>
+            <textarea id="inputText" placeholder="[ INPUT RAW DATA HERE: NAME / ADDR / PHONE ]"></textarea>
 
-        <button id="convertBtn">แปลงข้อความทันที</button>
+            <div class="controls">
+                <button class="btn-hacker" id="executeBtn">> EXECUTE_RANDOMIZATION</button>
+            </div>
+            
+            <div style="font-size: 0.8rem; opacity: 0.6;">
+                [ LOG: Homoglyph_Sub=ON, Typo_Sim=ON, Invisible_Anchor=ON ]
+            </div>
+        </div>
     </div>
-
-    <div id="results" class="results-grid"></div>
 </div>
 
-<div id="toast">คัดลอกแล้ว!</div>
+<!-- Popup Overlay -->
+<div class="overlay" id="overlay">
+    <div class="popup">
+        <div class="popup-header">
+            <span style="font-size: 1.2rem; font-weight: bold;">[ DECRYPTED_RESULTS ]</span>
+            <span class="close-popup" id="closePopup">[ X_CLOSE ]</span>
+        </div>
+        <div id="resultsContainer"></div>
+    </div>
+</div>
 
 <script>
+    // Matrix Background Effect
+    const canvas = document.getElementById('matrix-bg');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()*&^%";
+    const fontSize = 10;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+
+    function drawMatrix() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#0F0";
+        ctx.font = fontSize + "px arial";
+        for (let i = 0; i < drops.length; i++) {
+            const text = letters[Math.floor(Math.random() * letters.length)];
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            drops[i]++;
+        }
+    }
+    setInterval(drawMatrix, 33);
+
+    // Homoglyph Mapping (หน้าตาเหมือนกันแต่คนละรหัส)
+    const homoglyphs = {
+        'a': 'а', 'e': 'е', 'o': 'о', 'p': 'р', 'c': 'с', 'y': 'у', 'x': 'х',
+        'A': 'А', 'E': 'Е', 'O': 'О', 'P': 'Р', 'C': 'С', 'Y': 'У', 'X': 'Х',
+        'i': 'і', 'j': 'ј', 'S': 'Ѕ'
+    };
+
     const visibleChars = ['.', ',', '~', '-', 'ํ', '๐'];
     const invisibleChars = ['\u200B', '\u200C', '\u200D'];
 
-    function showToast(msg) {
-        const toast = document.getElementById('toast');
-        toast.innerText = msg;
-        toast.style.display = 'block';
-        setTimeout(() => { toast.style.display = 'none'; }, 2000);
+    // Logic Functions
+    function applyHomoglyph(text, prob = 0.3) {
+        return text.split('').map(char => {
+            if (homoglyphs[char] && Math.random() < prob) return homoglyphs[char];
+            return char;
+        }).join('');
     }
 
-    document.getElementById('pasteBtn').addEventListener('click', async () => {
-        try {
-            const text = await navigator.clipboard.readText();
-            document.getElementById('inputText').value = text;
-            showToast('วางข้อความสำเร็จ!');
-        } catch (err) {
-            showToast('ไม่สามารถเข้าถึงคลิปบอร์ดได้');
+    function applyTypo(text, prob = 0.02) {
+        let chars = text.split('');
+        for (let i = 0; i < chars.length; i++) {
+            if (Math.random() < prob && chars[i] !== ' ' && i < chars.length - 1) {
+                // สุ่มพิมพ์ซ้ำ หรือ สลับตำแหน่ง
+                if (Math.random() > 0.5) {
+                    chars.splice(i, 0, chars[i]); // พิมพ์ซ้ำ
+                    i++;
+                } else {
+                    [chars[i], chars[i+1]] = [chars[i+1], chars[i]]; // สลับ
+                }
+            }
         }
-    });
+        return chars.join('');
+    }
 
-    document.getElementById('convertBtn').addEventListener('click', () => {
-        const input = document.getElementById('inputText').value.trim();
-        if (!input) {
-            showToast('กรุณาใส่ข้อความก่อนครับ');
-            return;
-        }
-
-        const resultsDiv = document.getElementById('results');
-        resultsDiv.innerHTML = '';
-
-        const modes = [
-            { name: 'Natural', space: 0.08, char: 0.03, invis: 0.15 },
-            { name: 'Clean', space: 0.04, char: 0.01, invis: 0.1 },
-            { name: 'Invisible Focus', space: 0.05, char: 0.01, invis: 0.4 },
-            { name: 'Variation High', space: 0.12, char: 0.08, invis: 0.2 },
-            { name: 'Balanced', space: 0.1, char: 0.05, invis: 0.2 }
+    function formatPhone(phone) {
+        const clean = phone.replace(/\D/g, '');
+        const formats = [
+            clean,
+            `${clean.slice(0,3)}-${clean.slice(3,6)}-${clean.slice(6)}`,
+            `${clean.slice(0,3)} ${clean.slice(3,6)} ${clean.slice(6)}`,
+            `${clean.slice(0,3)}.${clean.slice(3,6)}.${clean.slice(6)}`
         ];
+        return formats[Math.floor(Math.random() * formats.length)];
+    }
 
-        modes.forEach((mode, index) => {
-            const processedText = processText(input, mode);
-            createResultCard(index + 1, mode.name, processedText);
-        });
-        
-        window.scrollTo({ top: document.getElementById('results').offsetTop - 20, behavior: 'smooth' });
-    });
-
-    function processText(text, mode) {
+    function processHacker(text, mode) {
         let lines = text.split('\n').map(l => l.trim()).filter(l => l !== '');
         
-        // 1. ตรวจจับเบอร์โทร
+        // 1. Detect Phone
         let phoneLine = '';
         const phoneRegex = /(\d{2,3}[-.\s]?\d{3,4}[-.\s]?\d{4})/;
         for (let i = 0; i < lines.length; i++) {
             if (phoneRegex.test(lines[i])) {
-                phoneLine = lines.splice(i, 1)[0];
+                phoneLine = formatPhone(lines[i]);
+                lines.splice(i, 1);
                 break;
             }
         }
 
-        // 2. สลับลำดับข้อมูล (ยกเว้นบรรทัดแรกและสุดท้าย)
-        if (document.getElementById('optShuffleLines').checked && lines.length > 2) {
+        // 2. Shuffle middle
+        if (lines.length > 2) {
             const first = lines.shift();
             const last = lines.pop();
             for (let i = lines.length - 1; i > 0; i--) {
@@ -378,86 +393,90 @@
             lines.push(last);
         }
 
-        // 3. แทรกเบอร์โทรกลับ (บรรทัด 2-3)
+        // 3. Re-insert phone
         if (phoneLine) {
             let pos = Math.floor(Math.random() * 2) + 1;
             if (pos >= lines.length) pos = Math.max(1, lines.length - 1);
             lines.splice(pos, 0, phoneLine);
         }
 
-        const useSpace = document.getElementById('optRandomSpace').checked;
-        const useChars = document.getElementById('optInsertChars').checked;
-        const useInvis = document.getElementById('optInvisible').checked;
-
-        let processed = lines.map((line, lineIdx) => {
-            const isPhone = phoneRegex.test(line);
-            let chars = line.split('');
-            let res = '';
+        // 4. Apply Advanced Randomization
+        let processed = lines.map(line => {
+            let res = applyHomoglyph(line, mode.homo);
+            res = applyTypo(res, mode.typo);
             
-            // แทรกอักขระล่องหนที่หัวบรรทัดเพื่อความหลากหลาย
-            if (useInvis && Math.random() < 0.3) res += invisibleChars[Math.floor(Math.random() * invisibleChars.length)];
-
-            for (let i = 0; i < chars.length; i++) {
-                res += chars[i];
-                if (chars[i] === ' ') continue;
-
-                // สุ่มแทรกอักขระล่องหน
-                if (useInvis && Math.random() < mode.invis) {
-                    res += invisibleChars[Math.floor(Math.random() * invisibleChars.length)];
-                }
-
-                if (!isPhone) {
-                    // สุ่มแทรกอักขระพิเศษ (โผล่มาบ้างนิดหน่อย)
-                    if (useChars && Math.random() < mode.char && i < chars.length - 1) {
-                        res += visibleChars[Math.floor(Math.random() * visibleChars.length)];
-                    }
-                    // สุ่มเว้นวรรค (โผล่มาบ้างนิดหน่อย)
-                    if (useSpace && Math.random() < mode.space && i < chars.length - 1) {
-                        res += ' ';
-                    }
-                }
+            let chars = res.split('');
+            let final = '';
+            for (let char of chars) {
+                final += char;
+                if (char === ' ') continue;
+                if (Math.random() < mode.invis) final += invisibleChars[Math.floor(Math.random() * invisibleChars.length)];
+                if (Math.random() < mode.special) final += visibleChars[Math.floor(Math.random() * visibleChars.length)];
             }
-            return res.trim();
+            return final.trim();
         });
 
-        // รวมเป็นบรรทัดเดียวโดยใช้ "ช่องว่าง" แทนตัวคั่น
-        return processed.join('  '); 
+        return processed.join('  ');
     }
 
-    function createResultCard(id, mode, text) {
-        const item = document.createElement('div');
-        item.className = 'result-item';
-        item.innerHTML = `
-            <div class="result-head">
-                <div style="display:flex; align-items:center; gap:12px;">
-                    <span style="font-weight:800; color:#1e293b;">#${id}</span>
-                    <span class="mode-tag">${mode}</span>
+    // UI Events
+    const overlay = document.getElementById('overlay');
+    const resultsContainer = document.getElementById('resultsContainer');
+
+    document.getElementById('pasteBtn').onclick = async () => {
+        const text = await navigator.clipboard.readText();
+        document.getElementById('inputText').value = text;
+    };
+
+    document.getElementById('clearBtn').onclick = () => {
+        document.getElementById('inputText').value = '';
+    };
+
+    document.getElementById('executeBtn').onclick = () => {
+        const input = document.getElementById('inputText').value.trim();
+        if (!input) return alert('ERROR: NO_DATA_FOUND');
+
+        resultsContainer.innerHTML = '';
+        const modes = [
+            { name: 'STEALTH_MODE', th: 'เน้นความเนียนสูงสุด', en: 'Max Stealth & Homoglyph', homo: 0.5, typo: 0, invis: 0.2, special: 0 },
+            { name: 'GHOST_DATA', th: 'เน้นอักขระล่องหน', en: 'Invisible Anchor Focus', homo: 0.2, typo: 0, invis: 0.6, special: 0 },
+            { name: 'HUMAN_ERROR', th: 'จำลองการพิมพ์ผิด', en: 'Typo & Human Simulation', homo: 0.1, typo: 0.05, invis: 0.1, special: 0.02 },
+            { name: 'DIGITAL_NOISE', th: 'กระจายตัวสูง', en: 'High Digital Variation', homo: 0.3, typo: 0.02, invis: 0.3, special: 0.05 },
+            { name: 'CYBER_SHIELD', th: 'สมดุลทุกเทคนิค', en: 'Balanced Cyber Protection', homo: 0.3, typo: 0.01, invis: 0.2, special: 0.02 }
+        ];
+
+        modes.forEach((m, i) => {
+            const text = processHacker(input, m);
+            const card = document.createElement('div');
+            card.className = 'result-card';
+            card.innerHTML = `
+                <div class="tech-info">
+                    <span style="color:var(--neon-green); font-weight:bold;">[ MODE: ${m.name} ]</span>
+                    <span>TH: ${m.th}</span>
+                    <span>EN: ${m.en}</span>
                 </div>
-                <button class="btn-copy" onclick="copyResult(this, \`${text.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`)">คัดลอก</button>
-            </div>
-            <div class="result-content">
-                <div class="result-box">${text}</div>
-            </div>
-        `;
-        document.getElementById('results').appendChild(item);
-    }
+                <div class="result-text">${text}</div>
+                <button class="btn-copy-small" onclick="copyText(this, \`${text.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`)">COPY_HASH</button>
+            `;
+            resultsContainer.appendChild(card);
+        });
 
-    function copyResult(btn, text) {
+        overlay.style.display = 'flex';
+    };
+
+    document.getElementById('closePopup').onclick = () => {
+        overlay.style.display = 'none';
+    };
+
+    function copyText(btn, text) {
         const el = document.createElement('textarea');
         el.value = text;
         document.body.appendChild(el);
         el.select();
         document.execCommand('copy');
         document.body.removeChild(el);
-        
-        const originalText = btn.innerText;
-        btn.innerText = 'สำเร็จ!';
-        btn.style.background = '#64748b';
-        showToast('คัดลอกลงคลิปบอร์ดแล้ว');
-        setTimeout(() => {
-            btn.innerText = originalText;
-            btn.style.background = '#10b981';
-        }, 2000);
+        btn.innerText = 'COPIED!';
+        setTimeout(() => { btn.innerText = 'COPY_HASH'; }, 2000);
     }
 </script>
 
