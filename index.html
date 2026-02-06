@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Randomizer & Formatter</title>
+    <title>Advanced Text Randomizer (Pro)</title>
     <style>
         :root {
-            --primary-color: #2563eb;
-            --bg-color: #f8fafc;
+            --primary-color: #4f46e5;
+            --bg-color: #f1f5f9;
             --card-bg: #ffffff;
-            --text-color: #1e293b;
-            --border-color: #e2e8f0;
+            --text-color: #0f172a;
+            --border-color: #cbd5e1;
         }
 
         body {
-            font-family: 'Sarabun', sans-serif;
+            font-family: 'Sarabun', -apple-system, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
@@ -23,113 +23,177 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
-        h1 {
+        header {
             text-align: center;
-            color: var(--primary-color);
             margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            background: #e0e7ff;
+            color: #4338ca;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
         }
 
         .card {
             background: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-            margin-bottom: 20px;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
         }
 
         textarea {
             width: 100%;
-            height: 150px;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
+            height: 180px;
+            padding: 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
             font-size: 16px;
             resize: vertical;
             box-sizing: border-box;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            transition: border-color 0.2s;
         }
 
-        .options {
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .options-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 10px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 12px;
         }
 
         .option-item {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             cursor: pointer;
+            font-size: 15px;
+            user-select: none;
+        }
+
+        .option-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         select {
-            padding: 8px;
-            border-radius: 6px;
+            padding: 8px 12px;
+            border-radius: 8px;
             border: 1px solid var(--border-color);
+            background: white;
+            cursor: pointer;
         }
 
-        button#convertBtn {
+        #convertBtn {
             width: 100%;
-            padding: 12px;
-            background-color: var(--primary-color);
+            padding: 16px;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 12px;
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.2s;
+            box-shadow: 0 4px 6px rgba(79, 70, 229, 0.3);
+            transition: transform 0.1s, box-shadow 0.2s;
         }
 
-        button#convertBtn:hover {
-            background-color: #1d4ed8;
+        #convertBtn:active {
+            transform: scale(0.98);
+        }
+
+        #convertBtn:hover {
+            box-shadow: 0 6px 12px rgba(79, 70, 229, 0.4);
         }
 
         .results-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
         }
 
-        .result-item {
+        .result-card {
             background: var(--card-bg);
-            padding: 15px;
-            border-radius: 8px;
+            border-radius: 12px;
             border: 1px solid var(--border-color);
-            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .result-header {
+            background: #f8fafc;
+            padding: 12px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .result-title {
             font-weight: bold;
             color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .result-body {
+            padding: 20px;
+            position: relative;
         }
 
         .result-text {
             white-space: pre-wrap;
             word-break: break-word;
-            background: #f1f5f9;
-            padding: 10px;
-            border-radius: 6px;
-            font-size: 15px;
+            font-size: 16px;
+            color: #334155;
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #cbd5e1;
         }
 
         .copy-btn {
-            padding: 6px 12px;
+            padding: 8px 16px;
             background: #10b981;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
+            font-weight: 600;
+            transition: background 0.2s;
         }
 
         .copy-btn:hover {
@@ -137,47 +201,65 @@
         }
 
         .copy-btn.copied {
-            background: #6b7280;
+            background: #64748b;
+        }
+
+        .footer-info {
+            text-align: center;
+            margin-top: 40px;
+            color: #64748b;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>Text Randomizer</h1>
+    <header>
+        <h1>Text Randomizer <span class="badge">PRO</span></h1>
+        <p>สร้างข้อความที่มีความหลากหลายสูง พร้อมอักขระล่องหน</p>
+    </header>
     
     <div class="card">
         <textarea id="inputText" placeholder="วางข้อความที่นี่... (เช่น ชื่อ / สถานที่ / ที่อยู่ / เบอร์โทร)"></textarea>
         
-        <div class="options">
+        <div class="options-grid">
             <label class="option-item">
-                <input type="checkbox" id="optRandomSpace" checked> สุ่มเว้นวรรค
+                <input type="checkbox" id="optRandomSpace" checked> สุ่มเว้นวรรค (Visible)
             </label>
             <label class="option-item">
-                <input type="checkbox" id="optInsertChars" checked> แทรกอักขระพิเศษ
+                <input type="checkbox" id="optInsertChars" checked> แทรกอักขระพิเศษ (. , ~)
             </label>
             <label class="option-item">
                 <input type="checkbox" id="optShuffleLines" checked> สลับตำแหน่งบรรทัด
             </label>
-            <div class="option-item">
-                รูปแบบ: 
+            <label class="option-item">
+                <input type="checkbox" id="optInvisible" checked> <b>อักขระล่องหน (Zero-Width)</b>
+            </label>
+            <div class="control-group">
+                <span>รูปแบบ:</span>
                 <select id="optLayout">
                     <option value="multi">หลายบรรทัด</option>
-                    <option value="single">บรรทัดเดียว</option>
+                    <option value="single">บรรทัดเดียว (ใช้ / คั่น)</option>
                 </select>
             </div>
         </div>
 
-        <button id="convertBtn">แปลงข้อความ</button>
+        <button id="convertBtn">แปลงข้อความ (สุ่มใหม่ทั้งหมด)</button>
     </div>
 
-    <div id="results" class="results-container">
-        <!-- Results will appear here -->
+    <div id="results" class="results-container"></div>
+
+    <div class="footer-info">
+        ระบบจะรักษาความถูกต้องของข้อมูล 100% โดยเน้นความหลากหลายของ Digital Signature
     </div>
 </div>
 
 <script>
-    const specialChars = ['.', ',', '~', '-', 'ํ', '๐'];
+    // อักขระพิเศษที่อ่านง่าย
+    const visibleChars = ['.', ',', '~', '-', 'ํ', '๐'];
+    // อักขระล่องหน (Zero Width Space, Zero Width Non-Joiner, Zero Width Joiner)
+    const invisibleChars = ['\u200B', '\u200C', '\u200D'];
     
     document.getElementById('convertBtn').addEventListener('click', () => {
         const input = document.getElementById('inputText').value.trim();
@@ -186,39 +268,42 @@
         const resultsDiv = document.getElementById('results');
         resultsDiv.innerHTML = '';
 
-        // สร้างผลลัพธ์ 5 รูปแบบ
-        for (let i = 1; i <= 5; i++) {
-            const processedText = processText(input);
-            createResultElement(i, processedText);
-        }
+        // สร้างผลลัพธ์ 5 รูปแบบที่มี "น้ำหนัก" ต่างกัน
+        const modes = [
+            { name: 'สมดุล', space: 0.1, char: 0.05, invis: 0.2 },
+            { name: 'เน้นอักขระพิเศษ', space: 0.05, char: 0.15, invis: 0.1 },
+            { name: 'เน้นอักขระล่องหน', space: 0.05, char: 0.02, invis: 0.5 },
+            { name: 'เน้นเว้นวรรค', space: 0.2, char: 0.02, invis: 0.1 },
+            { name: 'กระจายตัวสูง', space: 0.15, char: 0.1, invis: 0.3 }
+        ];
+
+        modes.forEach((mode, index) => {
+            const processedText = processText(input, mode);
+            createResultElement(index + 1, mode.name, processedText);
+        });
     });
 
-    function processText(text) {
+    function processText(text, mode) {
         let lines = text.split('\n').map(l => l.trim()).filter(l => l !== '');
         
-        // 1. แยกเบอร์โทรศัพท์ออกมา (ค้นหาตัวเลข 9-10 หลัก)
-        let phoneIndex = -1;
+        // 1. Smart Detection: ค้นหาเบอร์โทรศัพท์
+        let phoneLine = '';
         const phoneRegex = /(\d{2,3}[-.\s]?\d{3,4}[-.\s]?\d{4})/;
         
         for (let i = 0; i < lines.length; i++) {
             if (phoneRegex.test(lines[i])) {
-                phoneIndex = i;
+                phoneLine = lines.splice(i, 1)[0];
                 break;
             }
         }
 
-        let phoneLine = '';
-        if (phoneIndex !== -1) {
-            phoneLine = lines.splice(phoneIndex, 1)[0];
-        }
-
-        // 2. สลับตำแหน่งบรรทัด (ยกเว้นบรรทัดแรกและสุดท้ายของข้อมูลที่เหลือ)
+        // 2. สลับตำแหน่งบรรทัด (ยกเว้นบรรทัดแรกและสุดท้าย)
         const shuffleLines = document.getElementById('optShuffleLines').checked;
         if (shuffleLines && lines.length > 2) {
             const first = lines.shift();
             const last = lines.pop();
             
-            // Shuffle middle
+            // Fisher-Yates Shuffle
             for (let i = lines.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [lines[i], lines[j]] = [lines[j], lines[i]];
@@ -228,38 +313,53 @@
             lines.push(last);
         }
 
-        // 3. แทรกเบอร์โทรกลับเข้าไป (บังคับให้อยู่บรรทัดที่ 2 หรือ 3 และไม่ใช่บรรทัดสุดท้าย)
+        // 3. แทรกเบอร์โทรกลับ (บังคับให้อยู่บรรทัดที่ 2 หรือ 3 และห้ามอยู่บรรทัดสุดท้าย)
         if (phoneLine) {
-            let targetPos = Math.floor(Math.random() * 2) + 1; // สุ่มตำแหน่ง 1 หรือ 2 (index)
+            let targetPos = Math.floor(Math.random() * 2) + 1; 
             if (targetPos >= lines.length) targetPos = Math.max(1, lines.length - 1);
             lines.splice(targetPos, 0, phoneLine);
         }
 
-        // 4. ประมวลผลแต่ละบรรทัด (สุ่มเว้นวรรคและอักขระ)
-        const randomSpace = document.getElementById('optRandomSpace').checked;
-        const insertChars = document.getElementById('optInsertChars').checked;
+        // 4. ประมวลผลแต่ละบรรทัดตามน้ำหนักของ Mode
+        const useSpace = document.getElementById('optRandomSpace').checked;
+        const useChars = document.getElementById('optInsertChars').checked;
+        const useInvis = document.getElementById('optInvisible').checked;
 
-        let processedLines = lines.map(line => {
-            let words = line.split('');
+        let processedLines = lines.map((line, lineIdx) => {
+            // ถ้าเป็นบรรทัดเบอร์โทร ให้สุ่มน้อยลงเพื่อความแม่นยำ
+            const isPhone = phoneRegex.test(line);
+            const currentSpaceProb = isPhone ? 0.02 : mode.space;
+            const currentCharProb = isPhone ? 0.01 : mode.char;
+            const currentInvisProb = mode.invis;
+
+            let chars = line.split('');
             let newLine = '';
             
-            for (let i = 0; i < words.length; i++) {
-                newLine += words[i];
+            for (let i = 0; i < chars.length; i++) {
+                newLine += chars[i];
                 
-                // สุ่มแทรกอักขระพิเศษ (โอกาส 5%)
-                if (insertChars && Math.random() < 0.05 && i < words.length - 1 && words[i] !== ' ') {
-                    newLine += specialChars[Math.floor(Math.random() * specialChars.length)];
+                // ไม่แทรกอักขระถ้าเป็นช่องว่างอยู่แล้ว
+                if (chars[i] === ' ') continue;
+
+                // สุ่มแทรกอักขระล่องหน (หัวใจสำคัญของความหลากหลายทางข้อมูล)
+                if (useInvis && Math.random() < currentInvisProb) {
+                    newLine += invisibleChars[Math.floor(Math.random() * invisibleChars.length)];
+                }
+
+                // สุ่มแทรกอักขระพิเศษ
+                if (useChars && Math.random() < currentCharProb && i < chars.length - 1) {
+                    newLine += visibleChars[Math.floor(Math.random() * visibleChars.length)];
                 }
                 
-                // สุ่มเว้นวรรค (โอกาส 10%)
-                if (randomSpace && Math.random() < 0.1 && i < words.length - 1 && words[i] !== ' ') {
+                // สุ่มเว้นวรรค
+                if (useSpace && Math.random() < currentSpaceProb && i < chars.length - 1) {
                     newLine += ' ';
                 }
             }
-            return newLine.replace(/\s+/g, ' ').trim();
+            return newLine.trim();
         });
 
-        // 5. เลือกรูปแบบ Layout
+        // 5. Layout Output
         const layout = document.getElementById('optLayout').value;
         if (layout === 'single') {
             return processedLines.join(' / ');
@@ -268,37 +368,52 @@
         }
     }
 
-    function createResultElement(index, text) {
-        const container = document.createElement('div');
-        container.className = 'result-item';
+    function createResultElement(index, modeName, text) {
+        const card = document.createElement('div');
+        card.className = 'result-card';
         
         const header = document.createElement('div');
         header.className = 'result-header';
-        header.innerHTML = `<span>รูปแบบที่ ${index}</span>`;
+        header.innerHTML = `
+            <div class="result-title">
+                <span>#${index}</span>
+                <span style="font-size: 0.8rem; color: #64748b; font-weight: normal;">(โหมด: ${modeName})</span>
+            </div>
+        `;
         
         const copyBtn = document.createElement('button');
         copyBtn.className = 'copy-btn';
         copyBtn.innerText = 'คัดลอก';
         copyBtn.onclick = () => {
-            navigator.clipboard.writeText(text).then(() => {
-                copyBtn.innerText = 'คัดลอกแล้ว!';
-                copyBtn.classList.add('copied');
-                setTimeout(() => {
-                    copyBtn.innerText = 'คัดลอก';
-                    copyBtn.classList.remove('copied');
-                }, 2000);
-            });
+            // ใช้เทคนิคการคัดลอกที่รองรับอักขระพิเศษ
+            const el = document.createElement('textarea');
+            el.value = text;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            
+            copyBtn.innerText = 'คัดลอกแล้ว!';
+            copyBtn.classList.add('copied');
+            setTimeout(() => {
+                copyBtn.innerText = 'คัดลอก';
+                copyBtn.classList.remove('copied');
+            }, 2000);
         };
         
         header.appendChild(copyBtn);
+        
+        const body = document.createElement('div');
+        body.className = 'result-body';
         
         const textDiv = document.createElement('div');
         textDiv.className = 'result-text';
         textDiv.innerText = text;
         
-        container.appendChild(header);
-        container.appendChild(textDiv);
-        document.getElementById('results').appendChild(container);
+        body.appendChild(textDiv);
+        card.appendChild(header);
+        card.appendChild(body);
+        document.getElementById('results').appendChild(card);
     }
 </script>
 
