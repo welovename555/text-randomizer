@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SmartText Pro - iPhone Optimized</title>
+    <title>TextCipher X - ระบบพรางข้อความอัจฉริยะ</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -40,7 +40,7 @@
 
         .navbar {
             background: var(--card);
-            padding: 15px 20px;
+            padding: 20px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
@@ -53,23 +53,29 @@
 
         .brand {
             font-family: 'Kanit', sans-serif;
-            font-size: 1.4rem;
-            font-weight: 600;
+            font-size: 1.6rem;
+            font-weight: 700;
             color: var(--primary);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            letter-spacing: -0.5px;
         }
 
-        .version-tag {
-            font-size: 0.75rem;
+        .brand span {
+            color: var(--text-main);
+        }
+
+        .tagline {
+            font-size: 0.85rem;
             color: var(--text-muted);
             margin-top: 4px;
+            font-weight: 500;
         }
 
         .container {
             width: 100%;
-            max-width: 500px; /* เหมาะสำหรับหน้าจอมือถือ */
+            max-width: 500px;
             margin: 0 auto;
             padding: 20px;
             flex-grow: 1;
@@ -77,7 +83,7 @@
 
         .main-card {
             background: var(--card);
-            border-radius: 28px;
+            border-radius: 32px;
             padding: 24px;
             box-shadow: var(--shadow-lg);
             border: 1px solid var(--border);
@@ -86,7 +92,7 @@
         .section-title {
             font-family: 'Kanit', sans-serif;
             font-size: 1.1rem;
-            font-weight: 500;
+            font-weight: 600;
             margin-bottom: 16px;
             display: flex;
             align-items: center;
@@ -94,7 +100,6 @@
             color: var(--text-main);
         }
 
-        /* แก้ไข Layout ปุ่มไม่ให้บังช่องกรอก */
         .action-bar {
             display: flex;
             gap: 10px;
@@ -105,15 +110,15 @@
             flex: 1;
             background: #f1f5f9;
             border: 1px solid var(--border);
-            padding: 12px;
-            border-radius: 14px;
-            font-size: 0.9rem;
+            padding: 14px;
+            border-radius: 16px;
+            font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             color: var(--text-main);
         }
 
@@ -124,28 +129,29 @@
 
         textarea {
             width: 100%;
-            height: 220px;
-            padding: 16px;
+            height: 200px;
+            padding: 18px;
             border: 2px solid var(--border);
-            border-radius: 18px;
+            border-radius: 20px;
             font-size: 16px;
             font-family: inherit;
             resize: none;
             background: #fcfcfd;
             outline: none;
             margin-bottom: 24px;
-            -webkit-appearance: none; /* สำหรับ iOS */
+            line-height: 1.5;
         }
 
         textarea:focus {
             border-color: var(--primary);
             background: #fff;
+            box-shadow: 0 0 0 4px var(--primary-light);
         }
 
         .options-list {
             background: #f8fafc;
-            border-radius: 20px;
-            padding: 16px;
+            border-radius: 24px;
+            padding: 10px 18px;
             border: 1px solid var(--border);
             margin-bottom: 24px;
         }
@@ -153,7 +159,7 @@
         .option-item {
             display: flex;
             align-items: center;
-            padding: 12px 0;
+            padding: 14px 0;
             border-bottom: 1px solid #edf2f7;
             cursor: pointer;
         }
@@ -163,33 +169,34 @@
         }
 
         .option-item input {
-            width: 22px;
-            height: 22px;
-            margin-right: 12px;
+            width: 24px;
+            height: 24px;
+            margin-right: 14px;
             accent-color: var(--primary);
         }
 
         .option-label {
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 500;
+            color: var(--text-main);
         }
 
         .btn-primary {
             width: 100%;
-            padding: 18px;
+            padding: 20px;
             background: var(--primary);
             color: white;
             border: none;
-            border-radius: 18px;
+            border-radius: 20px;
             font-family: 'Kanit', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 500;
+            font-size: 1.2rem;
+            font-weight: 600;
             cursor: pointer;
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+            box-shadow: 0 10px 20px rgba(37, 99, 235, 0.2);
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .btn-primary:active {
@@ -197,18 +204,18 @@
             filter: brightness(0.9);
         }
 
-        /* Overlay & Popup */
+        /* Popup Styles */
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
             display: none;
             justify-content: center;
-            align-items: flex-end; /* Popup ขึ้นจากด้านล่างแบบมือถือ */
+            align-items: flex-end;
             z-index: 1000;
         }
 
@@ -218,9 +225,9 @@
             max-width: 500px;
             border-radius: 32px 32px 0 0;
             padding: 24px;
-            max-height: 85vh;
+            max-height: 90vh;
             overflow-y: auto;
-            box-shadow: 0 -10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 -10px 40px rgba(0,0,0,0.15);
             animation: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -233,45 +240,45 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
             border-bottom: 1px solid var(--border);
         }
 
         .result-card {
             background: #f8fafc;
             border: 1px solid var(--border);
-            border-radius: 20px;
-            margin-bottom: 16px;
-            padding: 16px;
+            border-radius: 24px;
+            margin-bottom: 20px;
+            padding: 20px;
         }
 
         .result-info {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
         }
 
         .badge {
-            font-size: 0.7rem;
+            font-size: 0.75rem;
             font-weight: 700;
-            padding: 4px 10px;
+            padding: 6px 12px;
             border-radius: 100px;
             background: var(--primary-light);
             color: var(--primary);
         }
 
         .result-text {
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: var(--text-main);
-            line-height: 1.5;
+            line-height: 1.6;
             word-break: break-all;
             background: #fff;
-            padding: 14px;
-            border-radius: 12px;
+            padding: 16px;
+            border-radius: 16px;
             border: 1px solid var(--border);
-            margin-bottom: 12px;
+            margin-bottom: 16px;
         }
 
         .btn-copy {
@@ -279,39 +286,40 @@
             background: var(--secondary);
             color: white;
             border: none;
-            padding: 12px;
-            border-radius: 12px;
+            padding: 14px;
+            border-radius: 14px;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 1rem;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         footer {
             text-align: center;
-            padding: 30px 20px;
+            padding: 40px 20px;
             color: var(--text-muted);
-            font-size: 0.85rem;
+            font-size: 0.9rem;
         }
 
         .signature {
             font-weight: 600;
             color: var(--primary);
-            margin-top: 5px;
+            margin-top: 8px;
+            font-size: 1rem;
         }
 
         #toast {
             position: fixed;
-            top: 20px;
+            top: 30px;
             left: 50%;
             transform: translateX(-50%);
             background: #1e293b;
             color: white;
-            padding: 12px 24px;
+            padding: 14px 28px;
             border-radius: 100px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 500;
             display: none;
             z-index: 2000;
@@ -320,8 +328,8 @@
 
         .loader {
             display: none;
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             border: 3px solid #fff;
             border-bottom-color: transparent;
             border-radius: 50%;
@@ -338,42 +346,41 @@
 
 <nav class="navbar">
     <div class="brand">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
-        SmartText Pro
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3m-3-3l-2.25-2.25"></path></svg>
+        TextCipher <span>X</span>
     </div>
-    <div class="version-tag">iPhone 13 Pro Max Optimized</div>
+    <div class="tagline">ระบบพรางข้อความอัจฉริยะ</div>
 </nav>
 
 <div class="container">
     <div class="main-card">
         <div class="section-title">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-            ข้อมูลที่ต้องการแปลง
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            วางข้อความที่นี่
         </div>
 
-        <!-- ย้ายปุ่มมาไว้ด้านบนเพื่อไม่ให้บังช่องกรอก -->
         <div class="action-bar">
             <button class="btn-secondary" id="pasteBtn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
                 วางข้อมูล
             </button>
             <button class="btn-secondary" id="clearBtn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                 ล้างค่า
             </button>
         </div>
 
-        <textarea id="inputText" placeholder="กรอก ชื่อ / ที่อยู่ / เบอร์โทร..."></textarea>
+        <textarea id="inputText" placeholder="ชื่อ / ที่อยู่ / เบอร์โทรศัพท์..."></textarea>
 
         <div class="section-title">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1V15a2 2 0 0 1-2-2 2 2 0 0 1 2-2v-.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33 1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82 1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2v.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-            ตั้งค่าการประมวลผล
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1V15a2 2 0 0 1-2-2 2 2 0 0 1 2-2v-.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33 1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2.0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82 1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2v.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            เลือกเทคนิคการพราง
         </div>
 
         <div class="options-list">
             <label class="option-item">
                 <input type="checkbox" id="optRandomSpace" checked>
-                <span class="option-label">สุ่มเว้นวรรค</span>
+                <span class="option-label">สุ่มเว้นวรรค (เนียนๆ)</span>
             </label>
             <label class="option-item">
                 <input type="checkbox" id="optInsertChars" checked>
@@ -385,44 +392,48 @@
             </label>
             <label class="option-item">
                 <input type="checkbox" id="optInvisible" checked>
-                <span class="option-label">อักขระล่องหน</span>
+                <span class="option-label">อักขระล่องหน (มองไม่เห็น)</span>
             </label>
             <label class="option-item">
                 <input type="checkbox" id="optHomoglyph" checked>
-                <span class="option-label">ตัวอักษรเสมือน (Homoglyph)</span>
+                <span class="option-label">ตัวอักษรเสมือน (ไทยปนอังกฤษ)</span>
             </label>
             <label class="option-item">
                 <input type="checkbox" id="optTypo" checked>
-                <span class="option-label">จำลองการพิมพ์ผิด (Typo)</span>
+                <span class="option-label">จำลองการพิมพ์ผิด</span>
             </label>
         </div>
 
         <button id="convertBtn" class="btn-primary">
             <span class="loader" id="loader"></span>
-            <span id="btnText">ประมวลผลข้อความ</span>
+            <span id="btnText">เริ่มการพรางข้อความ</span>
         </button>
     </div>
 </div>
 
 <footer>
-    <div>© 2026 SmartText Pro</div>
-    <div class="signature">พัฒนาโดย FB: nickname rittipon</div>
+    <div>© 2026 TextCipher X Engine</div>
+    <div class="signature">ฝีมือเว็บมาจาก FB: nickname rittipon</div>
 </footer>
 
 <div class="overlay" id="overlay">
     <div class="popup">
         <div class="popup-header">
-            <div style="font-family: 'Kanit', sans-serif; font-weight: 600;">ผลลัพธ์ (5 รูปแบบ)</div>
-            <div class="close-btn" id="closePopup" style="color: #ff4444; font-weight: bold; cursor: pointer;">ปิด</div>
+            <div style="font-family: 'Kanit', sans-serif; font-weight: 700; font-size: 1.2rem;">ผลลัพธ์การพราง (5 แบบ)</div>
+            <div class="close-btn" id="closePopup" style="color: #ef4444; font-weight: 700; cursor: pointer; padding: 5px 10px;">ปิด</div>
         </div>
         <div id="resultsContainer"></div>
     </div>
 </div>
 
-<div id="toast">คัดลอกสำเร็จ</div>
+<div id="toast">คัดลอกแล้ว!</div>
 
 <script>
-    const homoglyphs = {'a':'а','e':'е','o':'о','p':'р','c':'с','y':'у','x':'х','A':'А','E':'Е','O':'О','P':'Р','C':'С','Y':'У','X':'Х','i':'і','j':'ј','S':'Ѕ'};
+    // เทคนิค Homoglyph สำหรับอังกฤษ
+    const enHomoglyphs = {'a':'а','e':'е','o':'о','p':'р','c':'с','y':'у','x':'х','A':'А','E':'Е','O':'О','P':'Р','C':'С','Y':'У','X':'Х','i':'і','j':'ј','S':'Ѕ'};
+    // เทคนิค Visual Mimicry สำหรับไทย (ไทยปนอังกฤษ)
+    const thMimicry = {'บ':'u', 'ห':'x', 'ก':'n', 'ง':'v', 'อ':'o', 'ถ':'o', 'ร':'s'};
+    
     const visibleChars = ['.', ',', '~', '-', 'ํ', '๐'];
     const invisibleChars = ['\u200B', '\u200C', '\u200D'];
 
@@ -437,8 +448,8 @@
         try {
             const text = await navigator.clipboard.readText();
             document.getElementById('inputText').value = text;
-            showToast('วางข้อมูลแล้ว');
-        } catch (err) { showToast('ไม่สามารถเข้าถึงคลิปบอร์ด'); }
+            showToast('วางข้อมูลเรียบร้อย');
+        } catch (err) { showToast('เข้าถึงคลิปบอร์ดไม่ได้'); }
     };
 
     document.getElementById('clearBtn').onclick = () => {
@@ -448,23 +459,23 @@
 
     document.getElementById('convertBtn').onclick = () => {
         const input = document.getElementById('inputText').value.trim();
-        if (!input) return showToast('กรุณากรอกข้อมูล');
+        if (!input) return showToast('กรุณาใส่ข้อความก่อน');
 
         const loader = document.getElementById('loader');
         const btnText = document.getElementById('btnText');
         loader.style.display = 'block';
-        btnText.innerText = 'กำลังประมวลผล...';
+        btnText.innerText = 'กำลังพรางข้อมูล...';
 
         setTimeout(() => {
             const resultsContainer = document.getElementById('resultsContainer');
             resultsContainer.innerHTML = '';
 
             const modes = [
-                { name: 'เนียนสูงสุด', desc: 'เน้นความกลมกลืน', homo: 0.4, typo: 0, invis: 0.2, special: 0, space: 0.05 },
-                { name: 'ล่องหน', desc: 'เน้นอักขระที่มองไม่เห็น', homo: 0.1, typo: 0, invis: 0.6, special: 0, space: 0.03 },
-                { name: 'ธรรมชาติ', desc: 'จำลองการพิมพ์ผิด', homo: 0.1, typo: 0.04, invis: 0.1, special: 0.02, space: 0.08 },
-                { name: 'หลากหลาย', desc: 'กระจายอักขระพิเศษ', homo: 0.3, typo: 0.02, invis: 0.3, special: 0.05, space: 0.12 },
-                { name: 'สมดุล', desc: 'ผสมผสานทุกเทคนิค', homo: 0.2, typo: 0.01, invis: 0.2, special: 0.02, space: 0.07 }
+                { name: 'เนียนสุดๆ', desc: 'เน้นความกลมกลืน อ่านง่าย', homo: 0.3, mimic: 0.1, typo: 0, invis: 0.2, special: 0, space: 0.05 },
+                { name: 'พรางดิจิทัล', desc: 'เน้นอักขระล่องหน หลบระบบ', homo: 0.1, mimic: 0.05, typo: 0, invis: 0.7, special: 0, space: 0.03 },
+                { name: 'สไตล์มนุษย์', desc: 'จำลองการพิมพ์ผิดแบบเนียนๆ', homo: 0.1, mimic: 0.15, typo: 0.05, invis: 0.1, special: 0.02, space: 0.08 },
+                { name: 'กระจายตัว', desc: 'เน้นอักขระพิเศษให้ดูต่าง', homo: 0.4, mimic: 0.2, typo: 0.02, invis: 0.3, special: 0.06, space: 0.12 },
+                { name: 'สูตรผสม', desc: 'รวมทุกเทคนิคอย่างละนิด', homo: 0.2, mimic: 0.1, typo: 0.01, invis: 0.2, special: 0.03, space: 0.07 }
             ];
 
             modes.forEach((m, i) => {
@@ -473,9 +484,9 @@
             });
 
             loader.style.display = 'none';
-            btnText.innerText = 'ประมวลผลข้อความ';
+            btnText.innerText = 'เริ่มการพรางข้อความ';
             document.getElementById('overlay').style.display = 'flex';
-        }, 600);
+        }, 700);
     };
 
     document.getElementById('closePopup').onclick = () => {
@@ -491,7 +502,7 @@
             if (phoneRegex.test(lines[i])) {
                 phoneLine = lines.splice(i, 1)[0];
                 const clean = phoneLine.replace(/\D/g, '');
-                const fmts = [clean, `${clean.slice(0,3)}-${clean.slice(3,6)}-${clean.slice(6)}`, `${clean.slice(0,3)} ${clean.slice(3,6)} ${clean.slice(6)}`];
+                const fmts = [clean, `<LaTex>${clean.slice(0,3)}-$</LaTex>{clean.slice(3,6)}-<LaTex>${clean.slice(6)}`, `$</LaTex>{clean.slice(0,3)} <LaTex>${clean.slice(3,6)} $</LaTex>{clean.slice(6)}`];
                 phoneLine = fmts[Math.floor(Math.random() * fmts.length)];
                 break;
             }
@@ -518,6 +529,9 @@
         const useHomo = document.getElementById('optHomoglyph').checked;
         const useTypo = document.getElementById('optTypo').checked;
 
+        let mimicCount = 0;
+        const maxMimic = 3; 
+
         let processed = lines.map(line => {
             const isPhone = phoneRegex.test(line);
             let chars = line.split('');
@@ -531,7 +545,15 @@
             let res = '';
             for (let i = 0; i < chars.length; i++) {
                 let c = chars[i];
-                if (useHomo && homoglyphs[c] && Math.random() < mode.homo) c = homoglyphs[c];
+                
+                if (useHomo && thMimicry[c] && mimicCount < maxMimic && Math.random() < mode.mimic) {
+                    c = thMimicry[c];
+                    mimicCount++;
+                } 
+                else if (useHomo && enHomoglyphs[c] && Math.random() < mode.homo) {
+                    c = enHomoglyphs[c];
+                }
+
                 res += c;
                 if (c === ' ') continue;
                 if (useInvis && Math.random() < mode.invis) res += invisibleChars[Math.floor(Math.random() * invisibleChars.length)];
@@ -551,12 +573,13 @@
         div.className = 'result-card';
         div.innerHTML = `
             <div class="result-info">
-                <span class="badge">${mode.name}</span>
-                <span style="font-size:0.75rem; color:var(--text-muted);">${mode.desc}</span>
+                <span class="badge">แบบที่ <LaTex>${id}: $</LaTex>{mode.name}</span>
+                <span style="font-size:0.75rem; color:var(--text-muted); font-weight:500;"><LaTex>${mode.desc}</span>
             </div>
-            <div class="result-text">${text}</div>
-            <button class="btn-copy" onclick="copyText(this, \`${text.replace(/`/g, '\\`').replace(/\$/g, '\\$')}\`)">
-                คัดลอกข้อความ
+            <div class="result-text">$</LaTex>{text}</div>
+            <button class="btn-copy" onclick="copyText(this, \`<LaTex>${text.replace(/`/g, '\\`').replace(/\$</LaTex>/g, '\\$')}\`)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                คัดลอกข้อความนี้
             </button>
         `;
         document.getElementById('resultsContainer').appendChild(div);
@@ -570,12 +593,12 @@
         document.execCommand('copy');
         document.body.removeChild(el);
         
-        const oldText = btn.innerText;
-        btn.innerText = 'คัดลอกแล้ว!';
+        const oldHTML = btn.innerHTML;
+        btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> คัดลอกแล้ว!';
         btn.style.background = '#059669';
-        showToast('คัดลอกสำเร็จ');
+        showToast('คัดลอกสำเร็จ!');
         setTimeout(() => {
-            btn.innerText = oldText;
+            btn.innerHTML = oldHTML;
             btn.style.background = '#10b981';
         }, 2000);
     }
