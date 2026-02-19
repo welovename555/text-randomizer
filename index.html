@@ -3,583 +3,308 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TextCipher X - ระบบพรางข้อความอัจฉริยะ (Pro Edition)</title>
+    <title>TextCipher Pro - Final Edition</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Kanit:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1d4ed8;
-            --primary-light: #dbeafe;
-            --secondary: #475569;
-            --success: #059669;
-            --warning: #fbbf24;
-            --danger: #dc2626;
             --bg: #0f172a;
             --card: #1e293b;
-            --text: #f8fafc;
-            --text-muted: #94a3b8;
-            --border: #334155;
+            --primary: #3b82f6;
             --accent: #8b5cf6;
+            --success: #10b981;
+            --text: #f8fafc;
+            --text-dim: #94a3b8;
+            --border: #334155;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
-            font-family: 'Sarabun', sans-serif;
+            font-family: 'Sarabun', sans-serif; 
             background-color: var(--bg); 
             color: var(--text); 
-            margin: 0; 
-            padding: 0;
-            line-height: 1.6;
+            margin: 0; padding: 0; 
         }
 
         .header {
-            background: rgba(30, 41, 59, 0.95);
-            padding: 20px;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            background: rgba(30, 41, 59, 0.8);
             backdrop-filter: blur(10px);
+            padding: 15px; text-align: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 100;
         }
 
         .header h1 { 
-            font-family: 'Kanit', sans-serif;
-            margin: 0; 
-            color: #60a5fa; 
-            font-size: 26px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            margin: 0; font-family: 'Kanit', sans-serif; font-size: 20px; 
+            background: linear-gradient(to right, #60a5fa, #a78bfa);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
-        .container { padding: 15px; max-width: 650px; margin: 0 auto; }
+        .container { padding: 15px; max-width: 600px; margin: 0 auto; }
 
         .card {
-            background: var(--card);
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-            margin-bottom: 20px;
+            background: var(--card); border-radius: 16px;
+            padding: 20px; margin-bottom: 15px;
             border: 1px solid var(--border);
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
         }
 
-        .card-title {
-            font-family: 'Kanit', sans-serif;
-            font-size: 18px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #e2e8f0;
+        .label { 
+            display: block; margin-bottom: 10px; font-weight: 600; 
+            color: var(--text-dim); font-size: 14px;
         }
-
-        .action-bar { display: flex; gap: 10px; margin-bottom: 10px; }
-
-        .btn-small {
-            flex: 1;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            background: #334155;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            cursor: pointer;
-            color: #e2e8f0;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
-        .btn-small:hover { background: #475569; }
 
         textarea {
-            width: 100%;
-            height: 120px;
-            padding: 15px;
-            border-radius: 12px;
-            border: 2px solid var(--border);
-            background: #0f172a;
-            color: #f8fafc;
-            font-family: 'Sarabun', sans-serif;
-            font-size: 16px;
-            resize: none;
-            outline: none;
-            transition: border-color 0.2s;
+            width: 100%; height: 100px; padding: 12px;
+            background: #0f172a; border: 2px solid var(--border);
+            border-radius: 10px; color: white; font-size: 16px;
+            resize: none; outline: none; transition: 0.2s;
         }
-        textarea:focus { border-color: #60a5fa; }
+        textarea:focus { border-color: var(--primary); }
 
-        .options-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
+        /* Settings Table */
+        .settings-list { margin-top: 10px; }
+        .setting-item {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 0; border-bottom: 1px solid var(--border);
         }
+        .setting-item:last-child { border-bottom: none; }
 
-        .option-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px;
-            background: #334155;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background 0.2s;
-            font-size: 15px;
+        .setting-info { display: flex; align-items: center; gap: 10px; }
+        .setting-info span { font-size: 14px; font-weight: 500; }
+
+        .counter-box {
+            display: flex; align-items: center; gap: 5px;
+            background: #0f172a; padding: 5px 8px; border-radius: 8px;
         }
-        .option-item:hover { background: #475569; }
-        .option-item input { width: 18px; height: 18px; accent-color: var(--accent); }
+        .counter-box label { font-size: 11px; color: var(--text-dim); }
+        .input-num {
+            width: 40px; background: transparent; border: none;
+            color: #fbbf24; font-weight: bold; text-align: center; font-size: 15px;
+        }
 
         .btn-main {
-            width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-family: 'Kanit', sans-serif;
-            font-size: 18px;
-            font-weight: 600;
-            margin-top: 10px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
-            transition: transform 0.1s, box-shadow 0.2s;
+            width: 100%; padding: 16px; margin-top: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border: none; border-radius: 12px; color: white;
+            font-family: 'Kanit', sans-serif; font-size: 18px; font-weight: 600;
+            cursor: pointer; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
         }
         .btn-main:active { transform: scale(0.98); }
 
-        /* Popup Styles */
+        /* Result Popup */
         .overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.7);
-            display: none; z-index: 1000;
-            backdrop-filter: blur(5px);
+            background: rgba(0,0,0,0.85); display: none; z-index: 1000;
         }
-
         .popup {
             position: fixed; bottom: 0; left: 0; right: 0;
-            background: var(--card);
-            border-radius: 24px 24px 0 0;
-            padding: 20px;
-            max-height: 90vh;
-            overflow-y: auto;
-            z-index: 1001;
-            transform: translateY(100%);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            border-top: 1px solid var(--border);
+            background: var(--card); border-radius: 20px 20px 0 0;
+            padding: 20px; max-height: 80vh; overflow-y: auto;
+            z-index: 1001; transform: translateY(100%); transition: 0.3s;
         }
         .popup.active { transform: translateY(0); }
 
-        .popup-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 15px;
-            position: sticky; top: 0;
-            background: var(--card);
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border);
-            z-index: 10;
+        .result-box {
+            background: #0f172a; border-radius: 12px; padding: 15px;
+            margin-bottom: 15px; border: 1px solid var(--border);
         }
-
-        .edit-hint {
-            text-align: center;
-            font-size: 13px;
-            color: var(--warning);
-            margin-bottom: 15px;
-            background: rgba(251, 191, 36, 0.1);
-            padding: 8px;
-            border-radius: 8px;
-        }
-
-        .result-item {
-            background: #0f172a;
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-
-        .result-meta {
-            display: flex; justify-content: space-between;
-            font-size: 13px; color: var(--text-muted);
-            margin-bottom: 10px;
-            align-items: center;
-        }
-        .badge {
-            background: rgba(96, 165, 250, 0.1);
-            color: #60a5fa;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 12px;
-        }
-
-        .result-text {
-            font-size: 16px;
+        .editable-text {
+            background: #1e293b; padding: 12px; border-radius: 8px;
+            font-size: 16px; margin-bottom: 10px; outline: none;
+            border: 1px dashed var(--border); min-height: 40px;
             word-break: break-all;
-            background: #1e293b;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px dashed var(--border);
-            margin-bottom: 12px;
-            outline: none;
-            transition: border 0.2s, background 0.2s;
-            color: #f8fafc;
         }
-        .result-text:focus {
-            border: 1px dashed #8b5cf6;
-            background: #283548;
-        }
+        .editable-text:focus { border-color: var(--accent); background: #26334d; }
 
         .btn-copy {
-            width: 100%; padding: 12px;
-            background: var(--success); color: white;
-            border: none; border-radius: 8px;
-            font-weight: 600; display: flex;
-            align-items: center; justify-content: center; gap: 8px;
+            width: 100%; padding: 10px; background: var(--success);
+            border: none; border-radius: 8px; color: white; font-weight: bold;
             cursor: pointer;
         }
 
-        .footer { text-align: center; padding: 20px; color: var(--text-muted); font-size: 14px; }
-
         .toast {
             position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            background: #10b981; color: white;
-            padding: 12px 24px; border-radius: 30px;
-            font-size: 15px; font-weight: 500;
-            display: none; z-index: 2000;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            animation: slideDown 0.3s ease-out;
+            background: var(--success); color: white; padding: 8px 20px;
+            border-radius: 20px; font-size: 14px; display: none; z-index: 2000;
         }
-
-        @keyframes slideDown { from { top: -50px; opacity: 0; } to { top: 20px; opacity: 1; } }
-
-        /* Loading */
-        .loader { display: none; text-align: center; padding: 20px; }
-        .spinner {
-            width: 40px; height: 40px;
-            border: 4px solid #334155;
-            border-top: 4px solid #8b5cf6;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 10px;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-<div class="header">
-    <h1>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path></svg>
-        TextCipher X <sup style="font-size: 12px; color: #fbbf24;">PRO</sup>
-    </h1>
-</div>
+<div class="header"><h1>TEXTCIPHER X: CUSTOM CONTROL</h1></div>
 
 <div class="container">
     <div class="card">
-        <div class="card-title">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-            กรอกข้อมูลที่ต้องการพราง
-        </div>
-        
-        <div class="action-bar">
-            <button class="btn-small" id="pasteBtn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-                วางข้อมูล
-            </button>
-            <button class="btn-small" id="clearBtn">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                ล้างค่า
-            </button>
-        </div>
-
-        <textarea id="inputText" placeholder="วางชื่อ / ที่อยู่ / เบอร์โทร หรือข้อความเป้าหมาย ที่นี่..."></textarea>
+        <span class="label">ข้อความต้นฉบับ</span>
+        <textarea id="inputText" placeholder="เช่น 82/7 หมู่ 4 ถ.สุขุมวิท..."></textarea>
     </div>
 
     <div class="card">
-        <div class="card-title">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-            ตั้งค่าอาวุธพรางข้อมูล (เปิด/ปิด ได้ตามต้องการ)
+        <span class="label">ตั้งค่าการสุ่ม (ระบุจำนวนที่ต้องการ)</span>
+        <div class="settings-list">
+            <div class="setting-item">
+                <div class="setting-info">
+                    <input type="checkbox" id="chkTone" checked>
+                    <span>วรรณยุกต์หลอก (ฺ ่ ้ ์) </span>
+                </div>
+                <div class="counter-box">
+                    <label>จำนวน:</label>
+                    <input type="number" id="numTone" class="input-num" value="3">
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="setting-info">
+                    <input type="checkbox" id="chkInvis" checked>
+                    <span>อักขระล่องหน (บอทงง)</span>
+                </div>
+                <div class="counter-box">
+                    <label>จำนวน:</label>
+                    <input type="number" id="numInvis" class="input-num" value="5">
+                </div>
+            </div>
+            <div class="setting-item">
+                <div class="setting-info">
+                    <input type="checkbox" id="chkSpace" checked>
+                    <span>สุ่มเว้นวรรค (หั่นคำ)</span>
+                </div>
+                <div class="counter-box">
+                    <label>จำนวน:</label>
+                    <input type="number" id="numSpace" class="input-num" value="2">
+                </div>
+            </div>
         </div>
-        <div class="options-grid">
-            <label class="option-item" style="grid-column: 1 / -1; background: rgba(139, 92, 246, 0.2); border: 1px solid #8b5cf6;">
-                <input type="checkbox" id="optTone" checked> 
-                <span style="color: #c4b5fd; font-weight: 500;">แทรกวรรณยุกต์หลอก (ฺ ่ ้) เกาะตัวเลข/ช่องว่าง (บอทงง 100%)</span>
-            </label>
-            <label class="option-item"><input type="checkbox" id="optInvisible" checked> <span>อักขระล่องหน (Zero-width)</span></label>
-            <label class="option-item"><input type="checkbox" id="optSpace" checked> <span>สุ่มเว้นวรรค (หลบคำค้นหา)</span></label>
-            <label class="option-item"><input type="checkbox" id="optChar"> <span>แทรกอักขระพิเศษ (. , ~)</span></label>
-            <label class="option-item"><input type="checkbox" id="optHomoglyph"> <span>อังกฤษเสมือน (Homoglyph)</span></label>
-            <label class="option-item"><input type="checkbox" id="optMimicry"> <span>ไทยปนอังกฤษ (u-บ, x-ห)</span></label>
-            <label class="option-item"><input type="checkbox" id="optLeet"> <span>ภาษาวัยรุ่น (a-@, e-3)</span></label>
-        </div>
     </div>
 
-    <button class="btn-main" id="processBtn">เริ่มกระบวนการพรางข้อความ ⚡</button>
-
-    <div class="loader" id="loader">
-        <div class="spinner"></div>
-        <div style="color: #a78bfa; font-weight: 500;">ระบบกำลังทำงาน...</div>
-    </div>
-
-    <div class="footer">
-        Modded by AI Assistant | Original UI FB: nickname rittipon
-    </div>
+    <button class="btn-main" id="btnProcess">สร้างข้อความพราง ⚡</button>
 </div>
 
 <div class="overlay" id="overlay"></div>
 <div class="popup" id="popup">
-    <div class="popup-header">
-        <div style="font-family: 'Kanit', sans-serif; font-size: 20px; font-weight: 600; color: #f8fafc;">ผลลัพธ์การพราง (5 ระดับ)</div>
-        <div id="closePopup" style="color: #ef4444; font-weight: 600; cursor: pointer; padding: 5px;">✕ ปิดหน้าต่าง</div>
+    <div style="display:flex; justify-content:space-between; margin-bottom:15px; align-items:center;">
+        <span style="font-weight:bold; font-size:18px;">เลือกเวอร์ชันที่ชอบ</span>
+        <span id="btnClose" style="color:#ef4444; font-weight:bold; cursor:pointer;">ปิด</span>
     </div>
-    <div class="edit-hint">
-        💡 <b>เคล็ดลับ:</b> คุณสามารถแตะที่ข้อความในกล่อง เพื่อพิมพ์แก้ไขหรือลบจุดที่อ่านยากเกินไปได้ก่อนกดคัดลอก!
+    <div style="font-size:12px; color:var(--text-dim); margin-bottom:15px; background:rgba(251,191,36,0.1); padding:8px; border-radius:5px;">
+        💡 จิ้มที่ตัวข้อความเพื่อแก้ไขจุดที่อ่านยากก่อนคัดลอกได้เลย!
     </div>
-    <div id="resultsContainer"></div>
+    <div id="resultsList"></div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-    // --- ฐานข้อมูลพจนานุกรม (Hardcore Dictionaries) ---
-    const homoglyphs = {
-        'a': 'а', 'e': 'е', 'o': 'о', 'p': 'р', 'c': 'с', 'y': 'у', 'x': 'х', 'i': 'і', 'j': 'ј',
-        'A': 'А', 'E': 'Е', 'O': 'О', 'P': 'Р', 'C': 'С', 'Y': 'У', 'X': 'Х', 'I': 'І', 'J': 'Ј',
-        's': 'ѕ', 'H': 'Н', 'M': 'М', 'T': 'Т', 'B': 'В', 'K': 'К'
-    };
+    const MARKS_TONE = ['\u0E3A', '\u0E48', '\u0E49', '\u0E4C']; // ฺ , ่ , ้ , ์
+    const MARKS_INVIS = ['\u200B', '\u200C', '\u200D'];
 
-    const leetspeak = {
-        'a': '@', 'A': '@', 'e': '3', 'E': '3', 'i': '1', 'I': '1', 'o': '0', 'O': '0',
-        's': '$', 'S': '$', 'l': '1', 't': '7', 'T': '7', 'g': '9', 'G': '9'
-    };
+    function getRandomSample(arr, n) {
+        let shuffled = [...arr].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, n);
+    }
 
-    const mimicryMap = {
-        'บ': 'u', 'ห': 'x', 'ก': 'n', 'ง': 'v', 'อ': 'o', 'ร': 's',
-        'พ': 'w', 'ม': 'u', 'น': 'u', 'ย': 'y', 'ล': 'a', 'ท': 'n',
-        'เ': 'e', 'แ': 'll', 'า': 'a', 'โ': 'o', 'ป': 'u', 'ด': 'o',
-        'ต': 'm', 'ข': 'v', 'ช': 'v'
-    };
+    function processCipher() {
+        const input = document.getElementById('inputText').value;
+        if (!input) return alert('ใส่ข้อความก่อนจ้า');
 
-    const specialChars = ['.', ',', '~', '-', '`', '\'', '๐', '°', '·'];
-    const invisibleChars = ['\u200B', '\u200C', '\u200D', '\uFEFF'];
-    // วรรณยุกต์หลอก (พินทุ, ไม้เอก, ไม้โท) ที่จะเอาไปเกาะตัวเลข/ช่องว่าง
-    const toneMarks = ['\u0E3A', '\u0E48', '\u0E49']; 
+        const config = {
+            tone: { active: document.getElementById('chkTone').checked, count: parseInt(document.getElementById('numTone').value) || 0 },
+            invis: { active: document.getElementById('chkInvis').checked, count: parseInt(document.getElementById('numInvis').value) || 0 },
+            space: { active: document.getElementById('chkSpace').checked, count: parseInt(document.getElementById('numSpace').value) || 0 }
+        };
 
-    // --- Core Logic อัจฉริยะ ---
-    function randomizeText(input, modeConfig) {
-        let lines = input.split('\n');
-        let processedLines = lines.map(line => {
-            let chars = line.split('');
-            let result = [];
-            
-            for (let i = 0; i < chars.length; i++) {
-                let char = chars[i];
-                let added = false;
+        const resultsContainer = document.getElementById('resultsList');
+        resultsContainer.innerHTML = '';
 
-                const allowMimicry = document.getElementById('optMimicry').checked;
-                const allowHomoglyph = document.getElementById('optHomoglyph').checked;
-                const allowLeet = document.getElementById('optLeet').checked;
-                const allowInvis = document.getElementById('optInvisible').checked;
-                const allowSpace = document.getElementById('optSpace').checked;
-                const allowChar = document.getElementById('optChar').checked;
-                const allowTone = document.getElementById('optTone').checked;
+        // สร้าง 3 ตัวเลือก
+        for (let i = 1; i <= 3; i++) {
+            let tempArray = input.split('');
 
-                // 1. Leet Speak
-                if (!added && allowLeet && leetspeak[char] && Math.random() < modeConfig.leetProb) {
-                    result.push(leetspeak[char]);
-                    added = true;
-                }
+            // 1. วรรณยุกต์หลอก (เป้าหมาย: ตัวเลข และเครื่องหมาย)
+            if (config.tone.active && config.tone.count > 0) {
+                let targets = [];
+                tempArray.forEach((char, idx) => { if (/[0-9\/\-]/.test(char)) targets.push(idx); });
+                if (targets.length === 0) targets = tempArray.map((_, idx) => idx); // ถ้าไม่มีเลขเลย ให้สุ่มใส่ที่ไหนก็ได้
 
-                // 2. Mimicry
-                if (!added && allowMimicry && mimicryMap[char] && Math.random() < modeConfig.mimicProb) {
-                    result.push(mimicryMap[char]);
-                    added = true;
-                }
-
-                // 3. Homoglyph
-                if (!added && allowHomoglyph && homoglyphs[char] && Math.random() < modeConfig.homoProb) {
-                    result.push(homoglyphs[char]);
-                    added = true;
-                }
-
-                // ถ้าไม่มีการแปลงรูปตัวอักษรเลย ก็ใส่ตัวเดิมลงไปก่อน
-                if (!added) result.push(char);
-
-                // 4. แทรกวรรณยุกต์หลอก (เกาะติดตัวเลข, ช่องว่าง, เครื่องหมายสแลช/ขีด)
-                if (allowTone && (/[0-9\/\-]/.test(char) || char === ' ') && Math.random() < modeConfig.toneProb) {
-                    result.push(toneMarks[Math.floor(Math.random() * toneMarks.length)]);
-                }
-
-                // 5. อักขระล่องหน (แทรกระหว่างตัวอักษร)
-                if (allowInvis && Math.random() < modeConfig.invisProb) {
-                    result.push(invisibleChars[Math.floor(Math.random() * invisibleChars.length)]);
-                }
-
-                // 6. สุ่มเว้นวรรค 
-                if (allowSpace && char !== ' ' && Math.random() < modeConfig.spaceProb) {
-                    result.push(' ');
-                }
-
-                // 7. แทรกอักขระพิเศษ
-                if (allowChar && char.trim() !== '' && Math.random() < modeConfig.charProb) {
-                    result.push(specialChars[Math.floor(Math.random() * specialChars.length)]);
-                }
+                let chosen = getRandomSample(targets, config.tone.count);
+                chosen.forEach(idx => {
+                    tempArray[idx] += MARKS_TONE[Math.floor(Math.random() * MARKS_TONE.length)];
+                });
             }
-            return result.join('');
-        });
 
-        return processedLines.join('\n');
+            // 2. เว้นวรรค (เป้าหมาย: ไม่ใช่ช่องว่างเดิม)
+            if (config.space.active && config.space.count > 0) {
+                let targets = [];
+                tempArray.forEach((char, idx) => { if (char !== ' ') targets.push(idx); });
+                let chosen = getRandomSample(targets, config.space.count);
+                chosen.forEach(idx => { tempArray[idx] += ' '; });
+            }
+
+            // 3. อักขระล่องหน (เป้าหมาย: ใส่ตรงไหนก็ได้)
+            if (config.invis.active && config.invis.count > 0) {
+                let targets = Array.from({length: tempArray.length}, (_, i) => i);
+                let chosen = getRandomSample(targets, config.invis.count);
+                chosen.forEach(idx => {
+                    tempArray[idx] += MARKS_INVIS[Math.floor(Math.random() * MARKS_INVIS.length)];
+                });
+            }
+
+            addResultItem(tempArray.join(''), i);
+        }
+
+        showPopup();
     }
 
-    // --- การตั้งค่าแต่ละโหมด (ปรับให้คนอ่านง่ายขึ้น บอทงงขึ้น) ---
-    const modeConfigs = [
-        { 
-            name: 'เนียนสุดๆ (แนะนำ 🌟)', 
-            desc: 'คนอ่านง่ายปกติ 100% แต่อัดวรรณยุกต์หลอก+อักขระล่องหนให้บอทอ่านไม่ออก',
-            config: { leetProb: 0.0, mimicProb: 0.0, homoProb: 0.0, invisProb: 0.6, spaceProb: 0.0, charProb: 0.0, toneProb: 0.7 }
-        },
-        { 
-            name: 'แทรกเครื่องหมายหลอกตา', 
-            desc: 'เพิ่มวรรณยุกต์และเว้นวรรคนิดหน่อย คนยังอ่านลื่นไหลอยู่',
-            config: { leetProb: 0.0, mimicProb: 0.05, homoProb: 0.1, invisProb: 0.4, spaceProb: 0.05, charProb: 0.02, toneProb: 0.5 }
-        },
-        { 
-            name: 'พรางดิจิทัลระดับกลาง', 
-            desc: 'เริ่มมีการแปลงตัวอักษรบ้าง เหมาะกับแพลตฟอร์มที่กรองคำเข้มงวด',
-            config: { leetProb: 0.1, mimicProb: 0.15, homoProb: 0.2, invisProb: 0.5, spaceProb: 0.1, charProb: 0.05, toneProb: 0.6 }
-        },
-        { 
-            name: 'กระจายตัวสูง (สับคำ)', 
-            desc: 'สับประโยคด้วยเว้นวรรคและเครื่องหมาย หลบ AI จับคำเป็นกลุ่ม',
-            config: { leetProb: 0.15, mimicProb: 0.2, homoProb: 0.3, invisProb: 0.6, spaceProb: 0.25, charProb: 0.1, toneProb: 0.8 }
-        },
-        { 
-            name: 'Chaos Mode (ขั้นสุด!)', 
-            desc: 'ใส่เต็มทุกอย่างที่มี คนอ่านอาจจะต้องเพ่งนิดหน่อย แต่บอทยอมแพ้แน่นอน',
-            config: { leetProb: 0.3, mimicProb: 0.4, homoProb: 0.6, invisProb: 0.8, spaceProb: 0.3, charProb: 0.2, toneProb: 0.9 }
-        }
-    ];
-
-    // --- UI Logic ---
-    document.getElementById('processBtn').onclick = () => {
-        const input = document.getElementById('inputText').value.trim();
-        if (!input) {
-            showToast('กรุณากรอกข้อมูลก่อนครับ 😅');
-            return;
-        }
-
-        document.getElementById('loader').style.display = 'block';
-        document.getElementById('processBtn').style.opacity = '0.5';
-        document.getElementById('processBtn').disabled = true;
-
-        setTimeout(() => {
-            const container = document.getElementById('resultsContainer');
-            container.innerHTML = '';
-
-            modeConfigs.forEach((mode, index) => {
-                const randomized = randomizeText(input, mode.config);
-                addResultItem(mode.name, mode.desc, randomized, index);
-            });
-
-            document.getElementById('loader').style.display = 'none';
-            document.getElementById('processBtn').style.opacity = '1';
-            document.getElementById('processBtn').disabled = false;
-            
-            document.getElementById('overlay').style.display = 'block';
-            const popup = document.getElementById('popup');
-            popup.style.display = 'block';
-            setTimeout(() => popup.classList.add('active'), 10);
-        }, 600);
-    };
-
-    function addResultItem(title, desc, text, index) {
+    function addResultItem(text, idx) {
         const div = document.createElement('div');
-        div.className = 'result-item';
+        div.className = 'result-box';
         div.innerHTML = `
-            <div class="result-meta">
-                <span class="badge">${title}</span>
-                <span>${desc}</span>
-            </div>
-            <div class="result-text" contenteditable="true" spellcheck="false" id="resText-${index}">${text}</div>
-            <button class="btn-copy" onclick="copyResultText(this, 'resText-${index}')">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                คัดลอกข้อความนี้
-            </button>
+            <div style="font-size:12px; color:var(--text-dim); margin-bottom:5px;">เวอร์ชันที่ ${idx}</div>
+            <div class="editable-text" contenteditable="true" id="res-${idx}">${text}</div>
+            <button class="btn-copy" onclick="copyText('res-${idx}', this)">คัดลอกแบบที่ ${idx}</button>
         `;
-        document.getElementById('resultsContainer').appendChild(div);
+        document.getElementById('resultsList').appendChild(div);
     }
 
-    function closePopup() {
-        const popup = document.getElementById('popup');
-        popup.classList.remove('active');
+    function showPopup() {
+        document.getElementById('overlay').style.display = 'block';
+        const p = document.getElementById('popup');
+        p.style.display = 'block';
+        setTimeout(() => p.classList.add('active'), 10);
+    }
+
+    function hidePopup() {
+        const p = document.getElementById('popup');
+        p.classList.remove('active');
         setTimeout(() => {
-            popup.style.display = 'none';
+            p.style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
         }, 300);
     }
 
-    document.getElementById('closePopup').onclick = closePopup;
-    document.getElementById('overlay').onclick = closePopup;
+    function copyText(elId, btn) {
+        const text = document.getElementById(elId).innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            const old = btn.innerText;
+            btn.innerText = '✅ คัดลอกแล้ว!';
+            btn.style.background = '#059669';
+            showToast('คัดลอกลง Clipboard แล้ว ✨');
+            setTimeout(() => { 
+                btn.innerText = old; 
+                btn.style.background = 'var(--success)';
+            }, 1500);
+        });
+    }
 
     function showToast(msg) {
-        const toast = document.getElementById('toast');
-        toast.innerText = msg;
-        toast.style.display = 'block';
-        toast.style.animation = 'none';
-        toast.offsetHeight; // trigger reflow
-        toast.style.animation = 'slideDown 0.3s ease-out';
-        setTimeout(() => { toast.style.display = 'none'; }, 2500);
+        const t = document.getElementById('toast');
+        t.innerText = msg; t.style.display = 'block';
+        setTimeout(() => t.style.display = 'none', 2000);
     }
 
-    document.getElementById('pasteBtn').onclick = async () => {
-        const inputArea = document.getElementById('inputText');
-        try {
-            const text = await navigator.clipboard.readText();
-            if (text) {
-                inputArea.value = text;
-                showToast('วางข้อมูลเรียบร้อย ✅');
-                inputArea.focus();
-            } else {
-                showToast('ไม่มีข้อมูลในคลิปบอร์ด ❌');
-                inputArea.focus();
-            }
-        } catch (err) { 
-            showToast('เบราว์เซอร์ไม่รองรับ กรุณากดค้างที่ช่องเพื่อวางข้อมูล 📱');
-            inputArea.focus();
-        }
-    };
-
-    document.getElementById('clearBtn').onclick = () => {
-        document.getElementById('inputText').value = '';
-        showToast('ล้างข้อมูลแล้ว 🗑️');
-    };
-
-    function copyResultText(btn, elementId) {
-        const textElement = document.getElementById(elementId);
-        const textToCopy = textElement.innerText;
-
-        const el = document.createElement('textarea');
-        el.value = textToCopy;
-        document.body.appendChild(el);
-        el.select();
-        document.execCommand('copy');
-        document.body.removeChild(el);
-        
-        const oldHTML = btn.innerHTML;
-        btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> คัดลอกสำเร็จ!';
-        btn.style.background = '#047857';
-        
-        showToast('คัดลอกไปที่คลิปบอร์ดแล้ว! ✨');
-        
-        setTimeout(() => {
-            btn.innerHTML = oldHTML;
-            btn.style.background = 'var(--success)';
-        }, 2000);
-    }
+    document.getElementById('btnProcess').onclick = processCipher;
+    document.getElementById('btnClose').onclick = hidePopup;
+    document.getElementById('overlay').onclick = hidePopup;
 </script>
 
 </body>
