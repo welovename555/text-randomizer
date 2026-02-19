@@ -216,7 +216,6 @@
             font-size: 12px;
         }
 
-        /* Editable content area */
         .result-text {
             font-size: 16px;
             word-break: break-all;
@@ -303,16 +302,19 @@
     <div class="card">
         <div class="card-title">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
-            ตั้งค่าอาวุธพรางข้อมูล (เปิดใช้งานได้ตามต้องการ)
+            ตั้งค่าอาวุธพรางข้อมูล (เปิด/ปิด ได้ตามต้องการ)
         </div>
         <div class="options-grid">
-            <label class="option-item"><input type="checkbox" id="optSpace" checked> <span>สุ่มเว้นวรรค (หลบคำค้นหา)</span></label>
-            <label class="option-item"><input type="checkbox" id="optChar" checked> <span>แทรกอักขระพิเศษ (. , ~)</span></label>
+            <label class="option-item" style="grid-column: 1 / -1; background: rgba(139, 92, 246, 0.2); border: 1px solid #8b5cf6;">
+                <input type="checkbox" id="optTone" checked> 
+                <span style="color: #c4b5fd; font-weight: 500;">แทรกวรรณยุกต์หลอก (ฺ ่ ้) เกาะตัวเลข/ช่องว่าง (บอทงง 100%)</span>
+            </label>
             <label class="option-item"><input type="checkbox" id="optInvisible" checked> <span>อักขระล่องหน (Zero-width)</span></label>
-            <label class="option-item"><input type="checkbox" id="optHomoglyph" checked> <span>อังกฤษเสมือน (Homoglyph)</span></label>
-            <label class="option-item"><input type="checkbox" id="optMimicry" checked> <span>ไทยปนอังกฤษ (u-บ, x-ห)</span></label>
-            <label class="option-item"><input type="checkbox" id="optLeet" checked> <span>ภาษาวัยรุ่น (a-@, e-3)</span></label>
-            <label class="option-item"><input type="checkbox" id="optZalgo"> <span>อักขระซ้อน (Zalgo/บั๊ก)</span></label>
+            <label class="option-item"><input type="checkbox" id="optSpace" checked> <span>สุ่มเว้นวรรค (หลบคำค้นหา)</span></label>
+            <label class="option-item"><input type="checkbox" id="optChar"> <span>แทรกอักขระพิเศษ (. , ~)</span></label>
+            <label class="option-item"><input type="checkbox" id="optHomoglyph"> <span>อังกฤษเสมือน (Homoglyph)</span></label>
+            <label class="option-item"><input type="checkbox" id="optMimicry"> <span>ไทยปนอังกฤษ (u-บ, x-ห)</span></label>
+            <label class="option-item"><input type="checkbox" id="optLeet"> <span>ภาษาวัยรุ่น (a-@, e-3)</span></label>
         </div>
     </div>
 
@@ -364,7 +366,8 @@
 
     const specialChars = ['.', ',', '~', '-', '`', '\'', '๐', '°', '·'];
     const invisibleChars = ['\u200B', '\u200C', '\u200D', '\uFEFF'];
-    const zalgoMarks = ['\u030d', '\u030e', '\u0304', '\u0305', '\u033f', '\u0311', '\u0306', '\u0310', '\u0352', '\u0357', '\u0351', '\u0301', '\u0340', '\u0316', '\u0317', '\u0318', '\u0319', '\u031c', '\u031d', '\u0320', '\u0324', '\u0325', '\u0326', '\u0329', '\u032a', '\u032b', '\u032c', '\u032d', '\u032e', '\u032f', '\u0330', '\u0331', '\u0332', '\u0333', '\u0339', '\u033a', '\u033b', '\u033c'];
+    // วรรณยุกต์หลอก (พินทุ, ไม้เอก, ไม้โท) ที่จะเอาไปเกาะตัวเลข/ช่องว่าง
+    const toneMarks = ['\u0E3A', '\u0E48', '\u0E49']; 
 
     // --- Core Logic อัจฉริยะ ---
     function randomizeText(input, modeConfig) {
@@ -377,42 +380,38 @@
                 let char = chars[i];
                 let added = false;
 
-                // ตรวจสอบเช็คบ็อกซ์จาก UI เพื่อดูว่า User อนุญาตให้ใช้เทคนิคนี้ไหม
                 const allowMimicry = document.getElementById('optMimicry').checked;
                 const allowHomoglyph = document.getElementById('optHomoglyph').checked;
                 const allowLeet = document.getElementById('optLeet').checked;
                 const allowInvis = document.getElementById('optInvisible').checked;
                 const allowSpace = document.getElementById('optSpace').checked;
                 const allowChar = document.getElementById('optChar').checked;
-                const allowZalgo = document.getElementById('optZalgo').checked;
+                const allowTone = document.getElementById('optTone').checked;
 
-                // 1. Leet Speak (ภาษาวัยรุ่น)
+                // 1. Leet Speak
                 if (!added && allowLeet && leetspeak[char] && Math.random() < modeConfig.leetProb) {
                     result.push(leetspeak[char]);
                     added = true;
                 }
 
-                // 2. Mimicry (ไทยปนอังกฤษ)
+                // 2. Mimicry
                 if (!added && allowMimicry && mimicryMap[char] && Math.random() < modeConfig.mimicProb) {
                     result.push(mimicryMap[char]);
                     added = true;
                 }
 
-                // 3. Homoglyph (อังกฤษเสมือน)
+                // 3. Homoglyph
                 if (!added && allowHomoglyph && homoglyphs[char] && Math.random() < modeConfig.homoProb) {
                     result.push(homoglyphs[char]);
                     added = true;
                 }
 
-                // ถ้าไม่มีการแปลงรูปตัวอักษรเลย ก็ใส่ตัวเดิมลงไป
+                // ถ้าไม่มีการแปลงรูปตัวอักษรเลย ก็ใส่ตัวเดิมลงไปก่อน
                 if (!added) result.push(char);
 
-                // 4. อักขระซ้อน (Zalgo) ติดหลังตัวอักษร
-                if (allowZalgo && char.trim() !== '' && Math.random() < modeConfig.zalgoProb) {
-                    let numMarks = Math.floor(Math.random() * 2) + 1; // สุ่มซ้อน 1-2 ตัว
-                    for(let z=0; z<numMarks; z++) {
-                        result.push(zalgoMarks[Math.floor(Math.random() * zalgoMarks.length)]);
-                    }
+                // 4. แทรกวรรณยุกต์หลอก (เกาะติดตัวเลข, ช่องว่าง, เครื่องหมายสแลช/ขีด)
+                if (allowTone && (/[0-9\/\-]/.test(char) || char === ' ') && Math.random() < modeConfig.toneProb) {
+                    result.push(toneMarks[Math.floor(Math.random() * toneMarks.length)]);
                 }
 
                 // 5. อักขระล่องหน (แทรกระหว่างตัวอักษร)
@@ -433,35 +432,35 @@
             return result.join('');
         });
 
-        return processedLines.join('\n'); // คืนค่าแบบคงการขึ้นบรรทัดใหม่ไว้ให้
+        return processedLines.join('\n');
     }
 
-    // --- การตั้งค่าแต่ละโหมด ---
+    // --- การตั้งค่าแต่ละโหมด (ปรับให้คนอ่านง่ายขึ้น บอทงงขึ้น) ---
     const modeConfigs = [
         { 
-            name: 'เนียนสุดๆ (อ่านง่าย 99%)', 
-            desc: 'พึ่งพาอักขระล่องหนเป็นหลัก แทบไม่เปลี่ยนรูปประโยค',
-            config: { leetProb: 0.0, mimicProb: 0.05, homoProb: 0.1, zalgoProb: 0.0, invisProb: 0.4, spaceProb: 0.02, charProb: 0.01 }
+            name: 'เนียนสุดๆ (แนะนำ 🌟)', 
+            desc: 'คนอ่านง่ายปกติ 100% แต่อัดวรรณยุกต์หลอก+อักขระล่องหนให้บอทอ่านไม่ออก',
+            config: { leetProb: 0.0, mimicProb: 0.0, homoProb: 0.0, invisProb: 0.6, spaceProb: 0.0, charProb: 0.0, toneProb: 0.7 }
         },
         { 
-            name: 'สไตล์มนุษย์พิมพ์ผิด', 
-            desc: 'จำลองการพิมพ์ลื่น สลับภาษาแบบเนียนๆ',
-            config: { leetProb: 0.1, mimicProb: 0.25, homoProb: 0.3, zalgoProb: 0.0, invisProb: 0.1, spaceProb: 0.05, charProb: 0.02 }
+            name: 'แทรกเครื่องหมายหลอกตา', 
+            desc: 'เพิ่มวรรณยุกต์และเว้นวรรคนิดหน่อย คนยังอ่านลื่นไหลอยู่',
+            config: { leetProb: 0.0, mimicProb: 0.05, homoProb: 0.1, invisProb: 0.4, spaceProb: 0.05, charProb: 0.02, toneProb: 0.5 }
         },
         { 
             name: 'พรางดิจิทัลระดับกลาง', 
-            desc: 'เพิ่มการเว้นวรรคและอักขระพิเศษ ขัดขวางบอทจับคีย์เวิร์ด',
-            config: { leetProb: 0.15, mimicProb: 0.2, homoProb: 0.4, zalgoProb: 0.1, invisProb: 0.3, spaceProb: 0.15, charProb: 0.1 }
+            desc: 'เริ่มมีการแปลงตัวอักษรบ้าง เหมาะกับแพลตฟอร์มที่กรองคำเข้มงวด',
+            config: { leetProb: 0.1, mimicProb: 0.15, homoProb: 0.2, invisProb: 0.5, spaceProb: 0.1, charProb: 0.05, toneProb: 0.6 }
         },
         { 
-            name: 'กระจายตัวสูง (หั่นคำ)', 
-            desc: 'สับประโยคให้ขาดออกจากกัน เหมาะกับแพลตฟอร์มที่กรองดุ',
-            config: { leetProb: 0.2, mimicProb: 0.3, homoProb: 0.5, zalgoProb: 0.15, invisProb: 0.5, spaceProb: 0.25, charProb: 0.15 }
+            name: 'กระจายตัวสูง (สับคำ)', 
+            desc: 'สับประโยคด้วยเว้นวรรคและเครื่องหมาย หลบ AI จับคำเป็นกลุ่ม',
+            config: { leetProb: 0.15, mimicProb: 0.2, homoProb: 0.3, invisProb: 0.6, spaceProb: 0.25, charProb: 0.1, toneProb: 0.8 }
         },
         { 
             name: 'Chaos Mode (ขั้นสุด!)', 
-            desc: 'ใส่เต็มทุกอย่าง ระบบพังแค่ไหนก็รอด (แต่อาจจะอ่านยากหน่อย)',
-            config: { leetProb: 0.4, mimicProb: 0.5, homoProb: 0.8, zalgoProb: 0.3, invisProb: 0.8, spaceProb: 0.3, charProb: 0.25 }
+            desc: 'ใส่เต็มทุกอย่างที่มี คนอ่านอาจจะต้องเพ่งนิดหน่อย แต่บอทยอมแพ้แน่นอน',
+            config: { leetProb: 0.3, mimicProb: 0.4, homoProb: 0.6, invisProb: 0.8, spaceProb: 0.3, charProb: 0.2, toneProb: 0.9 }
         }
     ];
 
@@ -560,9 +559,8 @@
     };
 
     function copyResultText(btn, elementId) {
-        // ดึงข้อความล่าสุด (ที่ผู้ใช้อาจจะแก้แล้ว) ไปคัดลอก
         const textElement = document.getElementById(elementId);
-        const textToCopy = textElement.innerText; // ดึง text ดิบๆ ออกมา
+        const textToCopy = textElement.innerText;
 
         const el = document.createElement('textarea');
         el.value = textToCopy;
