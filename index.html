@@ -3,165 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TextCipher Pro - Final Edition</title>
+    <title>TextCipher X - Luxury Edition</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&family=Kanit:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0f172a;
-            --card: #1e293b;
-            --primary: #3b82f6;
-            --accent: #8b5cf6;
+            /* โทนสีหรูหรา (Premium Dark & Gold) */
+            --bg-main: #0a0a0c;
+            --bg-card: rgba(20, 20, 24, 0.7);
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --gold-dark: #aa8c2c;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: rgba(212, 175, 55, 0.2);
+            --border-highlight: rgba(212, 175, 55, 0.6);
             --success: #10b981;
-            --text: #f8fafc;
-            --text-dim: #94a3b8;
-            --border: #334155;
+            --danger: #ef4444;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
             font-family: 'Sarabun', sans-serif; 
-            background-color: var(--bg); 
-            color: var(--text); 
+            background: linear-gradient(135deg, #121216 0%, #000000 100%);
+            color: var(--text-main); 
             margin: 0; padding: 0; 
+            min-height: 100vh;
         }
 
         .header {
-            background: rgba(30, 41, 59, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 15px; text-align: center;
+            background: rgba(10, 10, 12, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 20px; text-align: center;
             border-bottom: 1px solid var(--border);
             position: sticky; top: 0; z-index: 100;
         }
 
         .header h1 { 
-            margin: 0; font-family: 'Kanit', sans-serif; font-size: 20px; 
-            background: linear-gradient(to right, #60a5fa, #a78bfa);
+            margin: 0; font-family: 'Kanit', sans-serif; font-size: 24px; 
+            background: linear-gradient(to right, var(--gold-light), var(--gold), var(--gold-dark));
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-weight: 600; letter-spacing: 1px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
         }
 
-        .container { padding: 15px; max-width: 600px; margin: 0 auto; }
+        .container { padding: 20px 15px; max-width: 650px; margin: 0 auto; }
 
         .card {
-            background: var(--card); border-radius: 16px;
-            padding: 20px; margin-bottom: 15px;
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px 20px; margin-bottom: 20px;
             border: 1px solid var(--border);
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
         }
 
-        .label { 
-            display: block; margin-bottom: 10px; font-weight: 600; 
-            color: var(--text-dim); font-size: 14px;
+        .card-title {
+            font-family: 'Kanit', sans-serif; font-size: 18px;
+            color: var(--gold); margin-bottom: 15px;
+            display: flex; align-items: center; gap: 8px; font-weight: 500;
+        }
+
+        /* Action Buttons (Paste / Clear) */
+        .action-bar { display: flex; gap: 12px; margin-bottom: 15px; }
+        .btn-small {
+            flex: 1; padding: 12px; border-radius: 12px;
+            background: rgba(212, 175, 55, 0.05);
+            color: var(--gold-light); border: 1px solid var(--border);
+            font-family: 'Kanit', sans-serif; font-size: 15px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            cursor: pointer; transition: all 0.3s ease;
+        }
+        .btn-small:hover {
+            background: rgba(212, 175, 55, 0.15);
+            border-color: var(--gold);
         }
 
         textarea {
-            width: 100%; height: 100px; padding: 12px;
-            background: #0f172a; border: 2px solid var(--border);
-            border-radius: 10px; color: white; font-size: 16px;
-            resize: none; outline: none; transition: 0.2s;
+            width: 100%; height: 130px; padding: 15px;
+            background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border);
+            border-radius: 14px; color: var(--text-main); font-size: 16px;
+            font-family: 'Sarabun', sans-serif;
+            resize: none; outline: none; transition: 0.3s;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
         }
-        textarea:focus { border-color: var(--primary); }
+        textarea:focus { border-color: var(--gold); box-shadow: 0 0 10px rgba(212,175,55,0.2), inset 0 2px 5px rgba(0,0,0,0.5); }
 
-        /* Settings Table */
-        .settings-list { margin-top: 10px; }
+        /* Settings Area */
+        .settings-list { margin-top: 15px; }
         .setting-item {
             display: flex; align-items: center; justify-content: space-between;
-            padding: 12px 0; border-bottom: 1px solid var(--border);
+            padding: 15px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         .setting-item:last-child { border-bottom: none; }
 
-        .setting-info { display: flex; align-items: center; gap: 10px; }
-        .setting-info span { font-size: 14px; font-weight: 500; }
+        .setting-info { display: flex; align-items: center; gap: 12px; }
+        .setting-info span { font-size: 15px; font-weight: 400; color: #e2e8f0; }
+        
+        /* Checkbox Styling */
+        input[type="checkbox"] {
+            width: 20px; height: 20px; accent-color: var(--gold);
+            cursor: pointer;
+        }
 
         .counter-box {
-            display: flex; align-items: center; gap: 5px;
-            background: #0f172a; padding: 5px 8px; border-radius: 8px;
+            display: flex; align-items: center; gap: 8px;
+            background: rgba(0,0,0,0.5); padding: 6px 12px; 
+            border-radius: 10px; border: 1px solid var(--border);
         }
-        .counter-box label { font-size: 11px; color: var(--text-dim); }
+        .counter-box label { font-size: 12px; color: var(--gold-dark); font-family: 'Kanit', sans-serif;}
         .input-num {
-            width: 40px; background: transparent; border: none;
-            color: #fbbf24; font-weight: bold; text-align: center; font-size: 15px;
+            width: 45px; background: transparent; border: none;
+            color: var(--gold-light); font-weight: 600; text-align: center; font-size: 16px;
+            outline: none;
         }
 
         .btn-main {
-            width: 100%; padding: 16px; margin-top: 10px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            border: none; border-radius: 12px; color: white;
+            width: 100%; padding: 18px; margin-top: 10px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border: none; border-radius: 16px; color: #000;
             font-family: 'Kanit', sans-serif; font-size: 18px; font-weight: 600;
-            cursor: pointer; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+            cursor: pointer; box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
+            transition: transform 0.1s, box-shadow 0.2s;
+            letter-spacing: 0.5px;
         }
-        .btn-main:active { transform: scale(0.98); }
+        .btn-main:active { transform: scale(0.98); box-shadow: 0 2px 10px rgba(212, 175, 55, 0.2); }
 
         /* Result Popup */
         .overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0,0,0,0.85); display: none; z-index: 1000;
+            background: rgba(0,0,0,0.9); display: none; z-index: 1000;
+            backdrop-filter: blur(4px);
         }
         .popup {
             position: fixed; bottom: 0; left: 0; right: 0;
-            background: var(--card); border-radius: 20px 20px 0 0;
-            padding: 20px; max-height: 80vh; overflow-y: auto;
-            z-index: 1001; transform: translateY(100%); transition: 0.3s;
+            background: linear-gradient(180deg, #1a1a20 0%, #0a0a0c 100%);
+            border-top: 1px solid var(--gold-dark);
+            border-radius: 28px 28px 0 0;
+            padding: 25px 20px; max-height: 85vh; overflow-y: auto;
+            z-index: 1001; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         .popup.active { transform: translateY(0); }
 
         .result-box {
-            background: #0f172a; border-radius: 12px; padding: 15px;
-            margin-bottom: 15px; border: 1px solid var(--border);
+            background: rgba(0,0,0,0.6); border-radius: 16px; padding: 18px;
+            margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
         .editable-text {
-            background: #1e293b; padding: 12px; border-radius: 8px;
-            font-size: 16px; margin-bottom: 10px; outline: none;
-            border: 1px dashed var(--border); min-height: 40px;
-            word-break: break-all;
+            background: rgba(255,255,255,0.03); padding: 15px; border-radius: 10px;
+            font-size: 16px; margin-bottom: 15px; outline: none;
+            border: 1px dashed var(--border); min-height: 50px;
+            word-break: break-all; color: var(--gold-light);
+            transition: all 0.3s;
         }
-        .editable-text:focus { border-color: var(--accent); background: #26334d; }
+        .editable-text:focus { border-color: var(--gold); background: rgba(212,175,55,0.05); }
 
         .btn-copy {
-            width: 100%; padding: 10px; background: var(--success);
-            border: none; border-radius: 8px; color: white; font-weight: bold;
-            cursor: pointer;
+            width: 100%; padding: 14px; background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success); border-radius: 12px; color: var(--success); 
+            font-weight: 600; cursor: pointer; font-family: 'Kanit', sans-serif; font-size: 16px;
+            transition: all 0.2s;
         }
+        .btn-copy:hover { background: var(--success); color: white; }
 
         .toast {
-            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-            background: var(--success); color: white; padding: 8px 20px;
-            border-radius: 20px; font-size: 14px; display: none; z-index: 2000;
+            position: fixed; top: 25px; left: 50%; transform: translateX(-50%);
+            background: var(--gold); color: #000; padding: 12px 25px;
+            border-radius: 30px; font-size: 15px; font-weight: 600; font-family: 'Kanit', sans-serif;
+            display: none; z-index: 2000; box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+            animation: slideDown 0.3s ease-out;
         }
+        @keyframes slideDown { from { top: -50px; opacity: 0; } to { top: 25px; opacity: 1; } }
     </style>
 </head>
 <body>
 
-<div class="header"><h1>TEXTCIPHER X: CUSTOM CONTROL</h1></div>
+<div class="header">
+    <h1>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        TEXTCIPHER LUXURY
+    </h1>
+</div>
 
 <div class="container">
     <div class="card">
-        <span class="label">ข้อความต้นฉบับ</span>
-        <textarea id="inputText" placeholder="เช่น 82/7 หมู่ 4 ถ.สุขุมวิท..."></textarea>
+        <div class="card-title">✨ ข้อมูลต้นฉบับ</div>
+        
+        <div class="action-bar">
+            <button class="btn-small" id="btnPaste">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+                วางข้อมูล
+            </button>
+            <button class="btn-small" id="btnClear">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                ล้างค่า
+            </button>
+        </div>
+
+        <textarea id="inputText" placeholder="กรอก หรือ วางข้อความที่นี่ (เช่น 82/7 หมู่ 4)..."></textarea>
     </div>
 
     <div class="card">
-        <span class="label">ตั้งค่าการสุ่ม (ระบุจำนวนที่ต้องการ)</span>
+        <div class="card-title">⚙️ ตั้งค่าความหนาแน่น (ระบุจำนวนเป๊ะๆ)</div>
         <div class="settings-list">
             <div class="setting-item">
                 <div class="setting-info">
                     <input type="checkbox" id="chkTone" checked>
-                    <span>วรรณยุกต์หลอก (ฺ ่ ้ ์) </span>
+                    <span>สระ/วรรณยุกต์หลอก (เกาะตัวเลข/ช่องว่าง)</span>
                 </div>
                 <div class="counter-box">
                     <label>จำนวน:</label>
-                    <input type="number" id="numTone" class="input-num" value="3">
+                    <input type="number" id="numTone" class="input-num" value="3" min="0">
                 </div>
             </div>
             <div class="setting-item">
                 <div class="setting-info">
                     <input type="checkbox" id="chkInvis" checked>
-                    <span>อักขระล่องหน (บอทงง)</span>
+                    <span>อักขระล่องหน (ซ่อนบอท)</span>
                 </div>
                 <div class="counter-box">
                     <label>จำนวน:</label>
-                    <input type="number" id="numInvis" class="input-num" value="5">
+                    <input type="number" id="numInvis" class="input-num" value="5" min="0">
                 </div>
             </div>
             <div class="setting-item">
@@ -171,23 +235,23 @@
                 </div>
                 <div class="counter-box">
                     <label>จำนวน:</label>
-                    <input type="number" id="numSpace" class="input-num" value="2">
+                    <input type="number" id="numSpace" class="input-num" value="2" min="0">
                 </div>
             </div>
         </div>
     </div>
 
-    <button class="btn-main" id="btnProcess">สร้างข้อความพราง ⚡</button>
+    <button class="btn-main" id="btnProcess">สร้างข้อความพราง ✦</button>
 </div>
 
 <div class="overlay" id="overlay"></div>
 <div class="popup" id="popup">
-    <div style="display:flex; justify-content:space-between; margin-bottom:15px; align-items:center;">
-        <span style="font-weight:bold; font-size:18px;">เลือกเวอร์ชันที่ชอบ</span>
-        <span id="btnClose" style="color:#ef4444; font-weight:bold; cursor:pointer;">ปิด</span>
+    <div style="display:flex; justify-content:space-between; margin-bottom:20px; align-items:center;">
+        <span style="font-weight:600; font-size:20px; color:var(--gold); font-family:'Kanit', sans-serif;">ผลลัพธ์การพราง</span>
+        <span id="btnClose" style="color:var(--danger); font-weight:600; cursor:pointer; font-family:'Kanit', sans-serif;">✕ ปิดหน้าต่าง</span>
     </div>
-    <div style="font-size:12px; color:var(--text-dim); margin-bottom:15px; background:rgba(251,191,36,0.1); padding:8px; border-radius:5px;">
-        💡 จิ้มที่ตัวข้อความเพื่อแก้ไขจุดที่อ่านยากก่อนคัดลอกได้เลย!
+    <div style="font-size:13px; color:var(--text-muted); margin-bottom:20px; background:rgba(212,175,55,0.05); padding:10px 15px; border-radius:8px; border-left:3px solid var(--gold);">
+        💡 แตะที่ข้อความเพื่อแก้ไขจุดที่อ่านยากก่อนก๊อปปี้ได้เลย!
     </div>
     <div id="resultsList"></div>
 </div>
@@ -195,17 +259,68 @@
 <div class="toast" id="toast"></div>
 
 <script>
-    const MARKS_TONE = ['\u0E3A', '\u0E48', '\u0E49', '\u0E4C']; // ฺ , ่ , ้ , ์
+    // อัปเดตคลังอักขระ (รวมของเดิมและของใหม่ที่ขอมา)
+    const MARKS_TONE = [
+        '\u0E3A', // ฺ
+        '\u0E48', // ่
+        '\u0E49', // ้
+        '\u0E4C', // ์
+        '\u0E38', // ุ
+        '\u0E39', // ู
+        '\u0E4A', // ๋
+        '\u0E47', // ็
+        '\u0E34', // ิ
+        '\u0E35', // ี
+        '\u0E36', // ึ
+        '\u0E37'  // ื
+    ]; 
     const MARKS_INVIS = ['\u200B', '\u200C', '\u200D'];
 
+    // ฟังก์ชันช่วยสุ่มแบบระบุจำนวน
     function getRandomSample(arr, n) {
         let shuffled = [...arr].sort(() => 0.5 - Math.random());
         return shuffled.slice(0, n);
     }
 
+    // แจ้งเตือน Toast
+    function showToast(msg) {
+        const t = document.getElementById('toast');
+        t.innerText = msg; 
+        t.style.display = 'block';
+        t.style.animation = 'none';
+        t.offsetHeight; // trigger reflow
+        t.style.animation = 'slideDown 0.3s ease-out';
+        setTimeout(() => t.style.display = 'none', 2000);
+    }
+
+    // ปุ่มวางข้อมูล (Paste)
+    document.getElementById('btnPaste').onclick = async () => {
+        try {
+            const text = await navigator.clipboard.readText();
+            if (text) {
+                document.getElementById('inputText').value = text;
+                showToast('วางข้อมูลเรียบร้อย ✅');
+            } else {
+                showToast('ไม่มีข้อมูลในคลิปบอร์ด ❌');
+            }
+        } catch (err) {
+            showToast('แตะค้างที่ช่องเพื่อวางข้อมูล (เบราว์เซอร์ไม่รองรับ) 📱');
+        }
+    };
+
+    // ปุ่มล้างค่า (Clear)
+    document.getElementById('btnClear').onclick = () => {
+        document.getElementById('inputText').value = '';
+        showToast('ล้างข้อมูลแล้ว 🗑️');
+    };
+
+    // ประมวลผลข้อความ
     function processCipher() {
         const input = document.getElementById('inputText').value;
-        if (!input) return alert('ใส่ข้อความก่อนจ้า');
+        if (!input) {
+            showToast('กรุณากรอกข้อความก่อนครับ 😅');
+            return;
+        }
 
         const config = {
             tone: { active: document.getElementById('chkTone').checked, count: parseInt(document.getElementById('numTone').value) || 0 },
@@ -220,24 +335,31 @@
         for (let i = 1; i <= 3; i++) {
             let tempArray = input.split('');
 
-            // 1. วรรณยุกต์หลอก (เป้าหมาย: ตัวเลข และเครื่องหมาย)
+            // 1. วรรณยุกต์หลอก (เป้าหมาย: ตัวเลข, เครื่องหมาย / -, และ ช่องว่าง)
             if (config.tone.active && config.tone.count > 0) {
                 let targets = [];
-                tempArray.forEach((char, idx) => { if (/[0-9\/\-]/.test(char)) targets.push(idx); });
-                if (targets.length === 0) targets = tempArray.map((_, idx) => idx); // ถ้าไม่มีเลขเลย ให้สุ่มใส่ที่ไหนก็ได้
-
-                let chosen = getRandomSample(targets, config.tone.count);
-                chosen.forEach(idx => {
-                    tempArray[idx] += MARKS_TONE[Math.floor(Math.random() * MARKS_TONE.length)];
+                tempArray.forEach((char, idx) => { 
+                    // ตรวจจับ: ตัวเลข(0-9), สแลช(/), ขีด(-), และ ช่องว่าง(\s)
+                    if (/[0-9\/\-\s]/.test(char)) targets.push(idx); 
                 });
+                
+                // ถ้าในข้อความมีจุดให้เกาะ
+                if (targets.length > 0) {
+                    let chosen = getRandomSample(targets, config.tone.count);
+                    chosen.forEach(idx => {
+                        tempArray[idx] += MARKS_TONE[Math.floor(Math.random() * MARKS_TONE.length)];
+                    });
+                }
             }
 
-            // 2. เว้นวรรค (เป้าหมาย: ไม่ใช่ช่องว่างเดิม)
+            // 2. เว้นวรรค (เป้าหมาย: แทรกตรงไหนก็ได้ที่ไม่ใช่ช่องว่างเดิม)
             if (config.space.active && config.space.count > 0) {
                 let targets = [];
                 tempArray.forEach((char, idx) => { if (char !== ' ') targets.push(idx); });
-                let chosen = getRandomSample(targets, config.space.count);
-                chosen.forEach(idx => { tempArray[idx] += ' '; });
+                if (targets.length > 0) {
+                    let chosen = getRandomSample(targets, config.space.count);
+                    chosen.forEach(idx => { tempArray[idx] += ' '; });
+                }
             }
 
             // 3. อักขระล่องหน (เป้าหมาย: ใส่ตรงไหนก็ได้)
@@ -255,17 +377,19 @@
         showPopup();
     }
 
+    // สร้างกล่องผลลัพธ์
     function addResultItem(text, idx) {
         const div = document.createElement('div');
         div.className = 'result-box';
         div.innerHTML = `
-            <div style="font-size:12px; color:var(--text-dim); margin-bottom:5px;">เวอร์ชันที่ ${idx}</div>
-            <div class="editable-text" contenteditable="true" id="res-${idx}">${text}</div>
-            <button class="btn-copy" onclick="copyText('res-${idx}', this)">คัดลอกแบบที่ ${idx}</button>
+            <div style="font-size:14px; color:var(--gold-dark); margin-bottom:8px; font-weight:600; font-family:'Kanit', sans-serif;">✨ รูปแบบที่ ${idx}</div>
+            <div class="editable-text" contenteditable="true" spellcheck="false" id="res-${idx}">${text}</div>
+            <button class="btn-copy" onclick="copyText('res-${idx}', this)">คัดลอกรูปแบบที่ ${idx}</button>
         `;
         document.getElementById('resultsList').appendChild(div);
     }
 
+    // ระบบ Popup
     function showPopup() {
         document.getElementById('overlay').style.display = 'block';
         const p = document.getElementById('popup');
@@ -279,29 +403,30 @@
         setTimeout(() => {
             p.style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
-        }, 300);
+        }, 400); // แมตช์กับเวลา transition
     }
 
+    // ฟังก์ชันคัดลอก
     function copyText(elId, btn) {
         const text = document.getElementById(elId).innerText;
         navigator.clipboard.writeText(text).then(() => {
-            const old = btn.innerText;
-            btn.innerText = '✅ คัดลอกแล้ว!';
-            btn.style.background = '#059669';
-            showToast('คัดลอกลง Clipboard แล้ว ✨');
+            const oldText = btn.innerText;
+            btn.innerText = '✅ คัดลอกสำเร็จ!';
+            btn.style.background = 'var(--success)';
+            btn.style.color = 'white';
+            showToast('คัดลอกลง Clipboard เรียบร้อย ✨');
+            
             setTimeout(() => { 
-                btn.innerText = old; 
-                btn.style.background = 'var(--success)';
-            }, 1500);
+                btn.innerText = oldText; 
+                btn.style.background = 'rgba(16, 185, 129, 0.1)';
+                btn.style.color = 'var(--success)';
+            }, 2000);
+        }).catch(() => {
+            showToast('เกิดข้อผิดพลาดในการคัดลอก ❌');
         });
     }
 
-    function showToast(msg) {
-        const t = document.getElementById('toast');
-        t.innerText = msg; t.style.display = 'block';
-        setTimeout(() => t.style.display = 'none', 2000);
-    }
-
+    // Event Listeners
     document.getElementById('btnProcess').onclick = processCipher;
     document.getElementById('btnClose').onclick = hidePopup;
     document.getElementById('overlay').onclick = hidePopup;
